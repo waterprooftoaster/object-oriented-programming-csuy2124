@@ -13,7 +13,7 @@ int main() { // Yes, it has to have an int for the return type
     //
 
     // Task 1. Printing hello ...  No use of "using namespace"
-
+    std::cout << "hello world" << std:endl;
 
     // Task 2  Printing hello ...  Using "using namespace"
 
