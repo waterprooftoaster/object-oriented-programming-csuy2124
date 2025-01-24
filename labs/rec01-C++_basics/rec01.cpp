@@ -181,21 +181,21 @@ int main() { // Yes, it has to have an int for the return type
     // Task 13 Displaying the vector THREE times
     //         a) using the indices,
     for (size_t y = 0; y < evens.size(); y++){
-        cout << evens[y];
+        cout << evens[y] << " ";
     }
     
     cout << endl;
     
     //         b) using a "ranged for"
     for (int z: evens){
-        cout << z;
+        cout << z << " ";
     }
     
     cout << endl;
     
     //         c) using indices again but backwards
-    for (size_t  num = evens.size(); num > 0; num++){
-        cout << evens[num];
+    for (size_t  num = (evens.size() - 1); num > 0; num--){
+        cout << evens[num] << " ";
     }
 
     cout << endl;
@@ -204,9 +204,10 @@ int main() { // Yes, it has to have an int for the return type
     vector<int> primes  = {2, 3, 5, 7, 11, 13, 17, 19};
     
     for (int prime : primes){
-        cout << prime;
+        cout << prime << " ";
     }
-    out << endl;
+    
+    cout << endl;
     
 } // main
 
