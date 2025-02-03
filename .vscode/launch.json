@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": ".",
-      "program": "build/Debug/outDebug",
+      "cwd": "c:/Users/waterprooftoaster/Git Repositories/Object_Oriented_Programming-CSUY2124/labs/rec02-structs,_vectors_and_functions",
+      "program": "c:/Users/waterprooftoaster/Git Repositories/Object_Oriented_Programming-CSUY2124/labs/rec02-structs,_vectors_and_functions/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
