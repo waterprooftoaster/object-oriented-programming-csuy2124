@@ -32,24 +32,27 @@ struct Hydrocarbon{
   }
 };
 
+
+//function headers
+void open_file(ifstream &ifs);
+Hydrocarbon create_hydrocarbon(const string &name, int C, int H);
+vector<Hydrocarbon> read_hydrocarbs(ifstream &ifs);
+void print_hydrocarbs(const vector<Hydrocarbon> &hydrocarbons);
+
+//main
+int main(){
+  ifstream hydrocarb_stream;
+  vector<Hydrocarbon> hydrocarbs = read_hydrocarbs(hydrocarb_stream);
+  print_hydrocarbs(hydrocarbs);
+}
+
 void open_file(ifstream &ifs){
-  do{
     ifs.open("hydrocarbs.txt");
 
     if(!ifs){
       cerr << "could not open file" << endl;
+      exit(1);
     }
-
-  }while(!ifs);
-}
-
-//function headers
-Hydrocarbon create_hydrocarbon(const string &name, int C, int H);
-vector<Hydrocarbon> read_hydrocarbs(ifstream &ifs);
-
-//main
-int main(){
-  
 }
 
 Hydrocarbon create_hydrocarbon(const string &name, int C, int H){
@@ -71,6 +74,7 @@ vector<Hydrocarbon> read_hydrocarbs(ifstream &ifs){
   vector<Hydrocarbon> hydrocarbons;
 
   while (ifs >> name >> ignore >> C >> ignore >> H){
+
     for (Hydrocarbon curr : hydrocarbons){
       if (C == curr.C && H == curr.H){
         curr.add_name(name);
@@ -81,8 +85,15 @@ vector<Hydrocarbon> read_hydrocarbs(ifstream &ifs){
       }
     }
   }
+  return hydrocarbons;
 }
 
 void sort_hydrocarbs(){
   //sort
+}
+
+void print_hydrocarbs(const vector<Hydrocarbon> &hydrocarbons){
+  for (Hydrocarbon curr : hydrocarbons){
+    curr.display();
+  }
 }
