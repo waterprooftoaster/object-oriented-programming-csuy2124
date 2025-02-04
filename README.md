@@ -1,0 +1,1 @@
+due to the different compilers, IDEs, and machiens used throughout this course some directories may have files with repeating names and different file types. Ignore all except the .cpp version of the file.
