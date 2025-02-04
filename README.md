@@ -1,1 +1,1 @@
-due to the different compilers, IDEs, and machiens used throughout this course some directories may have files with repeating names and different file types. Ignore all except the .cpp version of the file.
+Due to the different compilers, IDEs, and machines used throughout this course, some directories may have files with the same names but different file types. Ignore all other file types except the .cpp version of the file.
