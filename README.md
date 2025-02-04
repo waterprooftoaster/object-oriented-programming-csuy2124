@@ -1,1 +1,1 @@
-Due to the different compilers, IDEs, and machines used throughout this course, some directories may have files with the same names but different file types. Ignore all other file types except the .cpp version of the file.
+Due to the different compilers, IDEs, and machines used throughout this course, some directories may have files with the same names but different file types, and/or keeper files such as .gitkeep and DS.store. Ignore all keeper files and other file types except the .cpp version of the file.
