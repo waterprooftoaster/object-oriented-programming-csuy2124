@@ -13,7 +13,7 @@ using namespace std;
 
 struct Warrior {
     string name;
-    int strength;cd
+    int strength;
 };
 
 void open_file(ifstream &file);
