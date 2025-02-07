@@ -79,13 +79,12 @@ void battle(Warrior& warrior1, Warrior& warrior2) {
       ||(warrior2.strength == 0 && warrior1.strength != 0)) {
         if (warrior1.strength == 0) {
             cout << "He's dead, " << warrior2.name << endl;
-            return;
         }
 
         if (warrior2.strength == 0) {
             cout << "He's dead, " << warrior1.name << endl;
-            return;
         }
+        return; //prevents further checks if first is true
     }
 
     if (warrior1.strength == 0 && warrior2.strength == 0) {
