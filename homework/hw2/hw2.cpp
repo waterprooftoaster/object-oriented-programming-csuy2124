@@ -12,12 +12,8 @@ hw02
 using namespace std;
 
 struct Warrior {
-    Warrior(const string &warrior_name, int warrior_strength)
-        : name(warrior_name), strength(warrior_strength) {
-    }
-
     string name;
-    int strength;
+    int strength;cd
 };
 
 void open_file(ifstream &file);
@@ -42,7 +38,9 @@ void open_file(ifstream &file) {
 }
 
 Warrior create_warrior(const string &name, int strength) {
-    Warrior warrior(name, strength);
+    Warrior warrior;
+    warrior.name = name;
+    warrior.strength = strength;
     return warrior;
 }
 
