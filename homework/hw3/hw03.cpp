@@ -12,144 +12,177 @@
 using namespace std;
 
 class Warrior {
-    // class prototype to ensure defining of second friend funtion without error
-    class Weapon;
-    friend ostream& operator<<(ostream& os, const Warrior& somewarrior);
-    friend ostream& operator<<(ostream& os, const Weapon& someweapon);
+	public:
 
-public:
-    // initialization list
-    Warrior(const string& theName, const string& theWeapon, int theStrength)
-        : name(theName), weapon(theWeapon, theStrength) {}
+		Warrior(const string& the_warrior_name, const string& the_weapon_name, int the_weapon_strength)
+		  	: warrior_name(the_warrior_name), weapon(the_weapon_name, the_weapon_strength) {}
 
-    // getters and setters
-    string getName() const { return name; }
-    int getStrength() const { return weapon.getStrength(); }
-    void setStrength(int theStrength) { weapon.setStrength(theStrength); }
+        //methods
+    	int get_strength() {
+        	return weapon.get_strength();
+    	}
 
-    // battle is now a method, instead of funtion
-    // modify strength of Warriors, output different messages in different cases
-    void battle(Warrior& enemy) {
-        cout << name << " battles " << enemy.name << endl;
-        if (getStrength() == 0 && enemy.getStrength() == 0) {
-            cout << "Oh, NO! They're both dead! Yuck!" << endl;
-        } else if (getStrength() == 0 && enemy.getStrength() > 0) {
-            cout << "He's dead, " << enemy.name << endl;
-        } else if (getStrength() > 0 && enemy.getStrength() == 0) {
-            cout << "He's dead, " << name << endl;
-        } else {  // the strengths of both warriors are not 0
-            if (getStrength() == enemy.getStrength()) {
-                setStrength(0);
-                enemy.setStrength(0);
-                cout << "Mutual Annihilation: " << name << " and " << enemy.name
-                     << " die at each other's hands" << endl;
-            } else if (getStrength() > enemy.getStrength()) {
-                setStrength(getStrength() - enemy.getStrength());
-                enemy.setStrength(0);
-                cout << name << " defeats " << enemy.name << endl;
-            } else {  // getStrength() < enemy.getStrength()
-                enemy.setStrength(enemy.getStrength() - getStrength());
-                setStrength(0);
-                cout << enemy.name << " defeats " << name << endl;
-            }
+        string get_name() {
+          return warrior_name;
         }
-    }
 
-private:
-    // nested private Weapon class
-    class Weapon {
-        // friend function for the Weapon class
-        friend ostream& operator<<(ostream& os, const Weapon& someweapon);
+        void set_strength(int strength) {
+			weapon.set_strength(strength);
+        }
 
-    public:
-        // initialization list
-        Weapon(const string& theName, int theStrength)
-            : weapon_name(theName), strength(theStrength) {}
-        int getStrength() const { return strength; }
-        void setStrength(int theStrength) { strength = theStrength; }
+	private:
 
-    private:
-        // private variables of Weapon class
-        string weapon_name;
-        int strength;
-    };
-    // private variables of Warrior class
-    string name;
-    Weapon weapon;
+		class Weapon {
+        	public:
+
+				Weapon(const string& the_weapon_name, int the_strength)
+                    : weapon_name(the_weapon_name), strength(the_strength) {}
+
+				//methods
+				int get_strength() {
+					return strength;
+				}
+
+            	string get_name(){
+                	return weapon_name;
+                }
+
+				void set_strength(const int& new_strength) {
+         			strength = new_strength;
+				}
+
+           	private:
+
+				friend ostream& operator << (ostream& os, const Warrior& warrior);
+
+				string weapon_name;
+	            int strength;
+
+    	};
+
+		friend ostream& operator << (ostream& os, const Warrior& warrior);
+
+        string warrior_name;
+        Weapon weapon;
 };
 
-// function prototypes
-void openFile(ifstream& warriorStream);
-void displayWarriorVector(const vector<Warrior>& warriorVector);
-int searchWarrior(const string& name, const vector<Warrior>& warriorVector);
+void open_file(const ifstream& file);
+void battle(Warrior* warrior1, Warrior* warrior2);
 
-int main() {
-    ifstream warriorStream;
-    openFile(warriorStream);
-
-    vector<Warrior> warriors;  // stores all Warrior structures
-    string command;            // read command key words from stream
-    // identify the command word and take different actions
-    while (warriorStream >> command) {
-        if (command == "Warrior") {
-            string name, weapon;
-            int strength;
-            warriorStream >> name >> weapon >> strength;
-            // construct a new Warrior and put it into the vector
-            warriors.emplace_back(name, weapon, strength);
-        } else if (command == "Status") {
-            displayWarriorVector(warriors);
-        } else {
-            string name1, name2;
-            warriorStream >> name1 >> name2;
-            // find the index of warriors involved in the battle
-            int warrior_index1 = searchWarrior(name1, warriors);
-            int warrior_index2 = searchWarrior(name2, warriors);
-            warriors[warrior_index1].battle(warriors[warrior_index2]);
-        }
-    }
-    warriorStream.close();
+ostream& operator << (ostream& os, const Warrior& warrior) {
+	os << "Warrior: " << warrior.warrior_name() << ", weapon: " << warrior.weapon()
+       << " ," << warrior->get_strength() << endl;
+	return os;
 }
 
-void openFile(ifstream& warriorStream) {
-    warriorStream.clear();
-    warriorStream.open("warriors.txt");
-    // check if the file is succesfully opened
-    if (!warriorStream) {
-        cerr << "failed to open warriors.txt";
+void open_file(const ifstream& file) {
+
+	file.open("warriors.txt");
+    if (!file){
+
+    	cerr << "Error opening file" << endl;
         exit(1);
     }
 }
 
-// show numbers and information of existing Warriors
-void displayWarriorVector(const vector<Warrior>& warriorVector) {
-    cout << "There are: " << warriorVector.size() << " warriors" << endl;
-    for (const Warrior& curr_warrior : warriorVector) {
-        cout << curr_warrior;
-    }
+void battle(Warrior* warrior1, Warrior* warrior2) {
+
+	int warrior1_strength = warrior1->get_strength();
+    int warrior2_strength = warrior2->get_strength();
+    string warrior1_name = warrior1->get_name();
+    string warrior2_name = warrior2->get_name();
+
+	cout << warrior1_name << " battles " << warrior2_name << endl;
+
+	if ((warrior1_strength == 0 && warrior2_strength != 0)
+                || (warrior1_strength != 0 && warrior2_strength == 0)) {
+
+		if (warrior1_strength == 0) {
+
+			cout << "He's dead, " << warrior2_name << endl;
+		}
+
+		if (warrior2_strength == 0) {
+			cout << "He's dead, " << warrior1_name << endl;
+		}
+
+	return; //prevents further checks
+	}
+
+	if (warrior1_strength == 0 && warrior2_strength == 0) {
+
+		cout << "Oh, NO! They're both dead! Yuck!" << endl;
+
+		return; //prevents further checks
+	}
+
+	if (warrior1_strength == warrior2_strength){
+
+		cout << "Mutual Annihilation: " << warrior1_name << " and "
+			 << warrior2_name << " die at each other's hands" << endl;
+		warrior1_strength = warrior2_strength = 0;
+
+		return; //prevents further checks
+	}
+
+	if (warrior1_strength > warrior2_strength) {
+
+		cout << warrior1_name << " defeats " << warrior2_name << endl;
+		warrior1_strength -= warrior2_strength;
+		warrior2_strength = 0;
+
+		return; //prevents further checks
+	}
+
+	if (warrior2_strength > warrior1_strength) {
+
+		cout << warrior2_name << " defeats " << warrior1_name << endl;
+		warrior2_strength -= warrior1_strength;
+		warrior1_strength = 0;
+
+		return; //prevents further checks
+	}
 }
 
-// search corresponding Warrior by the name provided in a specified vector
-// and return its index in the vector
-int searchWarrior(const string& name, const vector<Warrior>& warriorVector) {
-    for (size_t index = 0; index < warriorVector.size(); index++) {
-        if (warriorVector[index].getName() == name) {
-            return index;
+int main() {
+  	vector<Warrior> warriors;
+	ifstream warrior_file;
+    open_file(warrior_file);
+    string token;
+
+    while (warrior_file >> token){
+
+		if (token == "Warrior") {
+
+			string warrior_name, weapon_name;
+			int strength;
+
+			warrior_file >> warrior_name >> weapon_name >> strength;
+			warriors.emplace_back(Warrior(warrior_name, Warrior::Weapon(weapon_name, strength)));
+		}
+
+		if (token == "Status"){
+			cout << "There are: " << warriors.size() << " warriors." << endl;
+
+			for (const Warrior& warrior : warriors) {
+			  cout << warrior << endl;
+			}
+		}
+
+        if (token == "Battle"){
+        	string warrior1_name, warrior2_name;
+            warrior_file >> warrior1_name >> warrior2_name;
+
+            for (const Warrior& warrior : warriors) {
+              if (warrior.get_name() == warrior1_name) {
+                Warrior* warrior1ptr = &warrior;
+              }
+
+              if (warrior.get_name() == warrior2_name) {
+                Warrior* warrior2ptr = &warrior;
+              }
+            }
+
+            battle (&warrior2ptr, &warrior1ptr);
         }
-    }
-    return warriorVector
-        .size();  // return size of vector if Warrior is not found
-}
-
-// operator overload for Warrior
-ostream& operator<<(ostream& os, const Warrior& somewarrior) {
-    os << "Warrior: " << somewarrior.name << ", " << somewarrior.weapon;
-    return os;
-}
-
-// operator overload for Weapon
-ostream& operator<<(ostream& os, const Warrior::Weapon& someweapon) {
-    os << "weapon: " << someweapon.weapon_name << ", " << someweapon.strength
-       << endl;
-    return os;
 }
