@@ -30,6 +30,57 @@ public:
         weapon.set_strength(strength);
     }
 
+    void battle(Warrior *warrior2) {
+        int warrior1_strength = get_strength();
+        int warrior2_strength = warrior2->get_strength();
+        string warrior1_name = warrior_name;
+        string warrior2_name = warrior2->get_name();
+
+        cout << warrior1_name << " battles " << warrior2_name << endl;
+
+        if ((warrior1_strength == 0 && warrior2_strength != 0)
+            || (warrior1_strength != 0 && warrior2_strength == 0)) {
+            if (warrior1_strength == 0) {
+                cout << "He's dead, " << warrior2_name << endl;
+            }
+
+            if (warrior2_strength == 0) {
+                cout << "He's dead, " << warrior1_name << endl;
+            }
+
+            return; //prevents further checks
+            }
+
+        if (warrior1_strength == 0 && warrior2_strength == 0) {
+            cout << "Oh, NO! They're both dead! Yuck!" << endl;
+
+            return; //prevents further checks
+        }
+
+        if (warrior1_strength == warrior2_strength) {
+            cout << "Mutual Annihilation: " << warrior1_name << " and "
+                    << warrior2_name << " die at each other's hands" << endl;
+            set_strength(0);
+            warrior2->set_strength(0);
+
+            return; //prevents further checks
+        }
+
+        if (warrior1_strength > warrior2_strength) {
+            cout << warrior1_name << " defeats " << warrior2_name << endl;
+            set_strength(warrior1_strength - warrior2_strength);
+            warrior2->set_strength(0);
+
+            return; //prevents further checks
+        }
+
+        if (warrior2_strength > warrior1_strength) {
+            cout << warrior2_name << " defeats " << warrior1_name << endl;
+            warrior2->set_strength(warrior2_strength - warrior1_strength);
+            set_strength(0);
+        }
+    }
+
 private:
     class Weapon {
     public:
@@ -51,23 +102,20 @@ private:
         }
 
     private:
-        friend ostream &operator <<(ostream &os, const Warrior::Weapon &weapon);
+        friend ostream &operator <<(ostream &os, const Weapon &weapon);
 
         string weapon_name;
         int strength;
     };
 
     friend ostream &operator <<(ostream &os, const Warrior &warrior);
-
-    friend ostream &operator <<(ostream &os, const Warrior::Weapon &weapon);
+    friend ostream &operator <<(ostream &os, const Weapon &weapon);
 
     string warrior_name;
     Weapon weapon;
 };
 
 void open_file(const ifstream &file);
-
-void battle(Warrior *warrior1, Warrior *warrior2);
 
 ostream &operator <<(ostream &os, const Warrior &warrior) {
     os << "Warrior: " << warrior.warrior_name << ", " << warrior.weapon;
@@ -88,56 +136,6 @@ void open_file(ifstream &file) {
     }
 }
 
-void battle(Warrior *warrior1, Warrior *warrior2) {
-    int warrior1_strength = warrior1->get_strength();
-    int warrior2_strength = warrior2->get_strength();
-    string warrior1_name = warrior1->get_name();
-    string warrior2_name = warrior2->get_name();
-
-    cout << warrior1_name << " battles " << warrior2_name << endl;
-
-    if ((warrior1_strength == 0 && warrior2_strength != 0)
-        || (warrior1_strength != 0 && warrior2_strength == 0)) {
-        if (warrior1_strength == 0) {
-            cout << "He's dead, " << warrior2_name << endl;
-        }
-
-        if (warrior2_strength == 0) {
-            cout << "He's dead, " << warrior1_name << endl;
-        }
-
-        return; //prevents further checks
-    }
-
-    if (warrior1_strength == 0 && warrior2_strength == 0) {
-        cout << "Oh, NO! They're both dead! Yuck!" << endl;
-
-        return; //prevents further checks
-    }
-
-    if (warrior1_strength == warrior2_strength) {
-        cout << "Mutual Annihilation: " << warrior1_name << " and "
-                << warrior2_name << " die at each other's hands" << endl;
-        warrior1->set_strength(0);
-        warrior2->set_strength(0);
-
-        return; //prevents further checks
-    }
-
-    if (warrior1_strength > warrior2_strength) {
-        cout << warrior1_name << " defeats " << warrior2_name << endl;
-        warrior1->set_strength(warrior1_strength - warrior2_strength);
-        warrior2->set_strength(0);
-
-        return; //prevents further checks
-    }
-
-    if (warrior2_strength > warrior1_strength) {
-        cout << warrior2_name << " defeats " << warrior1_name << endl;
-        warrior2->set_strength(warrior2_strength - warrior1_strength);
-        warrior1->set_strength(0);
-    }
-}
 
 int main() {
     vector<Warrior> warriors;
@@ -164,22 +162,21 @@ int main() {
         }
 
         if (token == "Battle") {
-            Warrior *warrior1ptr = nullptr;
-            Warrior *warrior2ptr = nullptr;
+            Warrior* opponent = nullptr;
             string warrior1_name, warrior2_name;
             warrior_file >> warrior1_name >> warrior2_name;
 
-            for (Warrior &warrior: warriors) {
-                if (warrior.get_name() == warrior1_name) {
-                    warrior1ptr = &warrior;
-                }
+            for (Warrior& curr_warrior: warriors) {
+                if (curr_warrior.get_name() == warrior1_name) {
 
-                if (warrior.get_name() == warrior2_name) {
-                    warrior2ptr = &warrior;
+                    for (Warrior& curr_warrior2: warriors) {
+                        if (curr_warrior2.get_name() == warrior2_name) {
+                            opponent = &curr_warrior2;
+                            curr_warrior.battle(opponent);
+                        }
+                    }
                 }
             }
-
-            battle(warrior1ptr, warrior2ptr);
         }
     }
 }
