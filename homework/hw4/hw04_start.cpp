@@ -12,6 +12,12 @@ using namespace std;
 // Your Noble and Warrior classes should go here.
 // ...
 
+
+
+
+
+
+
 int main()
 {
 	
