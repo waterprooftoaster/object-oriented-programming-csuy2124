@@ -138,7 +138,7 @@ public:
 
         if (self_army > opponent_army) {
             cout << name << " defeats " << opponent_name << endl;
-            double reduction_ratio = self_army / opponent_army;
+            double reduction_ratio = 1 - (opponent_army / self_army);
             set_strength(reduction_ratio);
             opponent.set_strength(0);
             opponent.kill();
@@ -148,7 +148,7 @@ public:
 
         if (opponent_army > self_army) {
             cout << opponent_name << " defeats " << name << endl;
-            double reduction_ratio = opponent_army / self_army;
+            double reduction_ratio = 1 - (self_army / opponent_army);
             set_strength(0);
             opponent.set_strength(reduction_ratio);;
             kill();
