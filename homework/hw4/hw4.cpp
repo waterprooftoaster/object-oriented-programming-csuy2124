@@ -59,7 +59,6 @@ public:
             Warrior* warriorptr = &warrior;
             warriors.emplace_back(warriorptr);
             warrior.set_employment_status(true);
-            size++;
         }
     }
 
@@ -75,9 +74,9 @@ public:
             for (size_t i = 0; i < warriors.size(); ++i) {
                 if (warriors[i]->get_name() == warrior.get_name()) {
                     warriors[i] = nullptr; //dereference
+                    warriors.erase(warriors.begin() + i);
                 }
             }
-            size--;
         }
     }
 
@@ -158,11 +157,10 @@ private:
     vector<Warrior*> warriors;
     bool dead = false;
     string name;
-    int size = 0;
 };
 
 ostream &operator << (ostream &os, const Noble& noble){
-    os << noble.name << "  has an army of " << noble.size << endl;
+    os << noble.name << "  has an army of " << noble.warriors.size() << endl;
     for (Warrior* curr_warrior : noble.warriors) {
         os << *curr_warrior << endl;
     }
@@ -173,7 +171,6 @@ ostream &operator << (ostream &os, const Warrior& warrior){
     os << warrior.name << ": " << warrior.strength << endl;
     return os;
 }
-
 
 int main() {
 
