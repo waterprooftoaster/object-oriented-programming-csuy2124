@@ -22,10 +22,11 @@ class Registrar;
 class Course {
     friend ostream& operator<<(ostream& os, const Course& rhs);
     friend ostream& operator<<(ostream& os, const Registrar& rhs);
+    friend ostream& operator<<(ostream& os, const Student& rhs);
 
 public:
     // Course methods needed by Registrar
-    explicit Course(const string& courseName);
+    explicit Course(const string& courseName) : name(courseName) {};
 
     const string& getName() const {
         return name;
@@ -40,12 +41,14 @@ public:
     void removeStudentsFromCourse(Student* student) {
         for (size_t i = 0; i < students.size(); i++) {
             if (student == students[i]) {
-                students[i]->removedFromCourse(this);
                 students[i] = nullptr;
                 students.erase(students.begin() + i);
-
             }
         }
+    }
+
+    ~Course() {
+        students.clear();
     }
 
 private:
@@ -56,20 +59,17 @@ private:
 class Student {
     friend ostream& operator<<(ostream& os, const Course& rhs);
     friend ostream& operator<<(ostream& os, const Registrar& rhs);
-    friend ostream& operator<<(ostream& os, const Student& rhs) {
-        os << rhs.name;
-        return os;
-    }
+    friend ostream& operator<<(ostream& os, const Student& rhs);
 
 public:
     // Student methods needed by Registrar
-    explicit Student(const string& name);
+    explicit Student(const string& name) : name(name) {}
 
     const string& getName() const {
         return name;
     }
 
-    const vector<Course*>& getCourse() const {
+    const vector<Course*>& getCourses() const {
         return courses;
     }
 
@@ -81,9 +81,15 @@ public:
     // Student method needed by Course::removeStudentsFromCourse
     void removedFromCourse(Course* course) {
         for (size_t i = 0; i < courses.size(); i++) {
-            courses[i] = nullptr;
-            courses.erase(courses.begin() + i);
+            if (course == courses[i]) {
+                courses[i] = nullptr;
+                courses.erase(courses.begin() + i);
+            }
         }
+    }
+
+    ~Student() {
+        courses.clear();
     }
 
 private:
@@ -92,19 +98,33 @@ private:
 }; // Student
 
 class Registrar {
+    friend ostream& operator<<(ostream& os, const Course& rhs);
     friend ostream& operator<<(ostream& os, const Registrar& rhs);
+    friend ostream& operator<<(ostream& os, const Student& rhs);
 
 public:
     Registrar() = default;
 
     // Creates a new course, if none with that name
     bool addCourse(const string& course_name) {
+        for (Course* course : courses) {
+            if (course->getName() == course_name) {
+                cout << "Course " << course_name << " already exists" << endl;
+                return false;
+            }
+        }
         courses.push_back(new Course(course_name));
         return true;
     }
 
     // Creates a new student, if none with that name
     bool addStudent(const string& student_name) {
+        for (Course* course : courses) {
+            if (course->getName() == student_name) {
+                cout << "Course " << student_name << " already exists" << endl;
+                return false;
+            }
+        }
         students.push_back(new Student(student_name));
         return true;
     }
@@ -118,59 +138,65 @@ public:
         for (size_t i = 0; i < courses.size(); i++) {
             if (courses[i]->getName() == courseName) {
                 course_index = i;
-            }
-            else {
-                cerr << "could not find course " << courseName << "in registrar" << endl;
-                return false;
+                break;
             }
         }
 
         for (size_t j = 0; j < students.size(); j++) {
             if (students[j]->getName() == studentName) {
                 student_index = j;
-            }
-            else {
-                cerr << "could not find student " << studentName << "in registrar" << endl;
-                return false;
+                break;
             }
         }
 
-        if (course_index != -1 && student_index != -1) {
-            courses[course_index]->addStudent(students[student_index]);
-            students[student_index]->addCourse(courses[course_index]);
-            return true;
+        if (course_index == -1 || student_index == -1) {
+            cout << "could not find student or course to enroll"
+                 << endl;
+            return false;
         }
 
-        cerr << "fail to enroll student in registrar due to indexing failure" << endl;
-        return false;
+        courses[course_index]->addStudent(students[student_index]);
+        students[student_index]->addCourse(courses[course_index]);
+        return true;
     }
 
     // Unenroll the students from the course and remove the course
     // from the Registrar.
+
     bool cancelCourse(const string& courseName) {
-        size_t course_index = -1;
+        Course* courseToCancel = nullptr;
+        // Find the course and remove it from the courses vector.
         for (size_t i = 0; i < courses.size(); i++) {
             if (courses[i]->getName() == courseName) {
-
-                delete courses[i];
-                courses[i] = nullptr;
+                courseToCancel = courses[i];
                 courses.erase(courses.begin() + i);
+                break;
             }
         }
+        if (courseToCancel == nullptr) return false;
 
-        for (size_t i = 0; i < students.size(); i++) {
-            if (students[i]->getCourse() == courseName) {}
+        for (Student* student : students) {
+            student->removedFromCourse(courseToCancel);
         }
 
-        cerr << "failure to cancel course" << endl;
-        return false;
+        delete courseToCancel;
+        return true;
     }
 
     // Get rid of everything!!!
     void purge() {
         for (Course* course : courses) {
-
+            delete course;
+            course = nullptr;
         }
+
+        for (Student* student : students) {
+            delete student;
+            student = nullptr;
+        }
+
+        courses.clear();
+        students.clear();
     }
 
 private:
@@ -182,9 +208,14 @@ private:
 }; // Registrar
 
 ostream& operator<<(ostream& os, const Registrar& rhs) {
-    os << "Courses: " << endl;
+    os << "Registrar's Report\n" << "Courses: " << endl;
     for (const Course* course : rhs.courses) {
         os << *course << endl;
+    }
+
+    os << "Students: " << endl;
+    for (const Student* student : rhs.students) {
+        os << *student << endl;
     }
     return os;
 }
@@ -193,10 +224,24 @@ ostream& operator<<(ostream& os, const Course& rhs) {
     os << rhs.name << ": ";
     if (rhs.students.empty()) {
         os << "no students" << endl;
+        return os;
     }
 
     for (const Student* student : rhs.students) {
-        os << student << " ";
+        os << student->name << " ";
+    }
+    return os;
+}
+
+ostream& operator<<(ostream& os, const Student& rhs) {
+    os << rhs.name << ": ";
+    if (rhs.courses.empty()) {
+        os << "no courses" << endl;
+        return os;
+    }
+
+    for (const Course* course : rhs.courses) {
+        os << course->name << " ";
     }
     return os;
 }
