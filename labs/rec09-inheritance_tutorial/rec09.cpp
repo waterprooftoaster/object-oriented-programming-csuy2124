@@ -5,8 +5,7 @@ using namespace std;
 class PrintedMaterial {
 public:
     PrintedMaterial(unsigned numPages)
-	: numOfPages(numPages)
-    {}
+	: numOfPages(numPages) {}
 
     virtual void displayNumPages() const = 0;
 
@@ -16,27 +15,21 @@ private:
 
 void PrintedMaterial::displayNumPages() const {
     cout << numOfPages << endl;
-} //  PrintedMaterial::displayNumPages
+}
 
 class Magazine : public PrintedMaterial {
 public:
     Magazine(unsigned numPages)
-	: PrintedMaterial(numPages)
-    {}
+	: PrintedMaterial(numPages) {}
 
-    // virtual NOTE even without writing "virtual"
-    // again, this overriden method IS virtual
-    // viruality cannot be removed once installed
-    // Also note that the = 0 has is not there
-    void displayNumPages() const
-    {
+    void displayNumPages() const {
 	cout << "Hi, I'm a Magazine object stored\n"
 	     << "(but I can't know that I am being\n"
 	     << "stored (by pointer) in a vector of\n"
 	     << "PrintedMaterial pointers!\n";
 	PrintedMaterial::displayNumPages();
 	cout << "(and I'm very glossy!\n";
-    } // displayNumPages
+    }
 
 private:
 };
@@ -44,8 +37,7 @@ private:
 class Book : public PrintedMaterial {
 public:
     Book(unsigned numPages)
-	: PrintedMaterial(numPages)
-    {}
+	: PrintedMaterial(numPages) {}
 
 private:
 };
@@ -57,15 +49,14 @@ public:
 	  numOfIndexPages(numIndxPgs)
     {}
 
-    void displayNumPages() const
-    {
+    void displayNumPages() const {
 	cout << "\nThis is a textbook.\n";
 	cout << "It is a very boring textbook.\n";
 	cout << "Pages: ";
 	PrintedMaterial::displayNumPages();
 	cout << "Index pages: ";
 	cout << numOfIndexPages << endl;
-    } //  displayNumPages
+    }
 
 private:
     unsigned numOfIndexPages;
@@ -74,11 +65,9 @@ private:
 class Novel : public Book {
 public:
     Novel(unsigned numPages)
-        : Book(numPages)
-    {}
+        : Book(numPages) {}
 
-    void displayNumPages() const
-    {
+    void displayNumPages() const {
         cout << "\nThis is the story of a very\n"
              << " interesting programmer's quest\n"
              << "  understand inheritance.\n"
@@ -103,7 +92,7 @@ public:
              << "   single one of them!\n"
              << "    And now, let's let the quest continue..."
              << endl << endl << endl;
-    } // displayNumPages
+    }
 
 private:
 };
@@ -142,4 +131,4 @@ int main() {
 	pmPtr->displayNumPages();
 	cout << endl;
     }
-} // main
+}
