@@ -28,7 +28,7 @@ public:
     // again, this overriden method IS virtual
     // viruality cannot be removed once installed
     // Also note that the = 0 has is not there
-    void displayNumPages() const
+    void displayNumPages() const 
     {
 	cout << "Hi, I'm a Magazine object stored\n"
 	     << "(but I can't know that I am being\n"
@@ -64,7 +64,7 @@ public:
 	cout << "Pages: ";
 	PrintedMaterial::displayNumPages();
 	cout << "Index pages: ";
-	cout << numOfIndexPages << endl;
+	cout << numOfIndexPages << endl; 
     } //  displayNumPages
 
 private:
@@ -124,7 +124,7 @@ int main() {
     mag.displayNumPages();
     cout << "===========\n";
 
-    // Storing generic objects in a vector
+    // Storing generic objects in a vector 
     cout << "\n\nNow we'll use a container. Yea!!!\n\n";
     vector< PrintedMaterial* > allThemPrinties;
     allThemPrinties.push_back(&text);
