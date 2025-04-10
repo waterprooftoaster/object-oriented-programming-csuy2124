@@ -21,7 +21,7 @@ class Noble;
 class Warrior;
 
 class Noble {
-	vector<Warrior *> warriors;
+	vector <Warrior*> warriors;
 	bool dead = false;
 	string name;
 
@@ -164,17 +164,17 @@ string Warrior::get_name() const { return name; }
 bool Warrior::set_employer(Noble* new_employer) {
 	employer = new_employer;
 	if (employer == nullptr) {
-		cout << "somehow failed to set " << this->name
-			 << "to be employed by" << new_employer->get_name() << endl;
+		cout << "somehow failed to set " << this -> name << "to be employed by"
+				<< new_employer -> get_name() << endl;
 		return false;
 	}
 	return true;
 }
 
 bool Warrior::runaway() {
-	if (!employer -> remove_warrior(this)) {return false;}
-	cout << name << " flees in terror, abandoning his lord, "
-		 << employer->get_name() << endl;
+	if (!employer -> remove_warrior(this)) { return false; }
+	cout << name << " flees in terror, abandoning his lord, " << employer ->
+			get_name() << endl;
 	return true;
 }
 
@@ -206,7 +206,7 @@ bool Noble::hire(Warrior& warrior) {
 
 	Warrior* warriorptr = &warrior;
 	//first, allow warrior to know their boss is
-	if (!warriorptr->set_employer(this)) {return false;}
+	if (!warriorptr -> set_employer(this)) { return false; }
 	warrior . set_employment_status(true);
 	//now add warrior to army
 	warriors . emplace_back(warriorptr);
@@ -222,7 +222,7 @@ bool Noble::fire(Warrior& warrior) {
 	cout << warrior . get_name() << ", you don't work for me anymore! -- " <<
 			name << endl;
 
-	for (size_t i = 0; i < warriors . size(); ++i) {
+	for (size_t i = 0 ; i < warriors . size() ; ++i) {
 		if (warriors[i] -> get_name() == warrior . get_name()) {
 			warriors[i] = nullptr;
 			warriors . erase(warriors . begin() + i); //remove
@@ -238,7 +238,7 @@ bool Noble::remove_warrior(Warrior* warrior) {
 		return false;
 	}
 
-	for (size_t i = 0; i < warriors . size(); ++i) {
+	for (size_t i = 0 ; i < warriors . size() ; ++i) {
 		if (warriors[i] == warrior) {
 			warriors[i] = nullptr;
 			warriors . erase(warriors . begin() + i); //remove
