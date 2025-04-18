@@ -19,21 +19,24 @@ public:
 	explicit Noble(const std::string& noble_name) : name(noble_name) {}
 
 	//method prototypes
-	std::string get_name() const;
 
-	double get_army_strength() const;
+	virtual bool remove_without_iterators(Warrior* warrior);
 
-	bool hire(Warrior& warrior);
+	virtual std::string get_name() const;
 
-	bool fire(Warrior& warrior);
+	virtual double get_army_strength() const;
 
-	void set_strength(double reduction_ratio);
+	virtual bool hire(Warrior& warrior);
 
-	void battle(Noble& opponent);
+	virtual bool fire(Warrior& warrior);
 
-	bool remove_warrior(Warrior* warrior);
+	virtual void set_strength(double reduction_ratio);
 
-	void kill();
+	virtual void battle(Noble& opponent);
+
+	virtual bool remove_warrior(Warrior* warrior);
+
+	virtual void kill();
 }; //class Noble
 }
 

@@ -9,4 +9,9 @@ add_executable(hw07
         hw08.cpp
         Noble.cpp
         Warrior.cpp
+        Lord.cpp
+        PersonWithStrengthToFight.cpp
+        Swordsman.cpp
+        Wizard.cpp
+        Archer.cpp
 )

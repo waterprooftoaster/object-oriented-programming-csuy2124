@@ -3,12 +3,19 @@ CS2124 hw08-test.cpp
   -jbs
  */
 
+#include "Lord.h"
+#include "PersonWithStrengthToFight.h"
+#include "Archer.h"
+#include "Swordsman.h"
+#include "Wizard.h"
 
 #include <string>
 #include <vector>
 #include <iostream>
 #include <cassert>
+
 using namespace std;
+using namespace WarriorCraft;
 
 //
 // Test Code
