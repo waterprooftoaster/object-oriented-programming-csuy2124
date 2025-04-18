@@ -1,11 +1,10 @@
 #include "Warrior.h"
 
-namespace WarriorCraft{
-
+namespace WarriorCraft {
 void Warrior::speak() const {
 	Protector::speak();
-	std::cout << " Take that in the name of my lord, "
-			  << get_employer() -> get_name() << std:: endl;
+	std::cout << get_name() << " says: " <<
+			" Take that in the name of my lord, " << get_employer()->get_name()
+			<< std::endl;
 }
-
 }

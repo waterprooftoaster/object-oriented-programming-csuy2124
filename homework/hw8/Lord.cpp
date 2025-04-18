@@ -1,3 +1,3 @@
 #include "Lord.h"
 
-namespace WarriorCraft{}
+namespace WarriorCraft {}

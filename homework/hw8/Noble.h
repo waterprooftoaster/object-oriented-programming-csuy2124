@@ -8,7 +8,7 @@
 
 namespace WarriorCraft {
 class Noble {
-	std::vector <Protector*> protectors;
+	std::vector<Protector*> protectors;
 	bool dead = false;
 	std::string name;
 
@@ -16,19 +16,21 @@ class Noble {
 	friend std::ostream& operator <<(std::ostream& os, const Noble& noble);
 
 public:
+	virtual ~Noble() = default;
+
 	//constructor
 	explicit Noble(const std::string& noble_name) : name(noble_name) {}
 
 	//method prototype
 	virtual std::string get_name() const;
 
-	virtual double get_army_strength() const;
+	virtual double get_strength() const;
 
 	virtual bool hires(Protector& protector);
 
 	virtual bool fires(Protector& protector);
 
-	virtual void set_strength(double reduction_ratio);
+	virtual bool set_strength(double reduction_ratio);
 
 	virtual void battle(Noble& opponent);
 
@@ -39,7 +41,6 @@ public:
 	virtual bool is_dead() const;
 
 	virtual void speak() const;
-
 }; //class Noble
 }
 

@@ -5,7 +5,6 @@
 #include "Noble.h"
 
 namespace WarriorCraft {
-
 class Wizard : public Protector {
 	std::string sound = "POOF";
 
@@ -15,6 +14,5 @@ public:
 
 	std::string get_sound() const override;
 };
-
 }
 #endif

@@ -5,22 +5,26 @@
 #include "Noble.h"
 
 namespace WarriorCraft {
+class PersonWithStrengthToFight : public Noble {
+	double strength;
 
-class PersonWithStrengthToFight : public Noble{
-int strength;
-
-friend std::ostream& operator <<(std::ostream &os,
-								const PersonWithStrengthToFight& person);
+	friend std::ostream& operator <<(
+	std::ostream& os,
+	const PersonWithStrengthToFight& person);
 
 public:
 	//constructor
-	explicit PersonWithStrengthToFight(const std::string& noble_name,
-		const int& personwithstrengthtofight_strength)
+	explicit PersonWithStrengthToFight(
+	const std::string& noble_name,
+	const int& personwithstrengthtofight_strength)
 	: Noble(noble_name), strength(personwithstrengthtofight_strength) {}
 
 	void speak() const override;
-};
 
+	double get_strength() const override;
+
+	bool set_strength(double reduction_ratio) override;
+};
 }
 
 #endif

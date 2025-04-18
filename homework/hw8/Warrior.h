@@ -11,7 +11,6 @@ public:
 	: Protector(protector_name, protector_strength) {}
 
 	void speak() const override;
-
 };
 }
 #endif

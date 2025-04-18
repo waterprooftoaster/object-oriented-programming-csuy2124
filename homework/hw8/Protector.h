@@ -9,29 +9,29 @@ class Noble;
 
 class Protector {
 	std::string name;
-	int strength;
+	double strength;
 	Noble* employer = nullptr;
 
 	// friend
-	friend std::ostream& operator <<(std::ostream& os, const Protector& protector);
+	friend std::ostream& operator <<(
+	std::ostream& os,
+	const Protector& protector);
 
 public:
+	virtual ~Protector() = default;
+
 	//constructor
-	Protector(const std::string& protector_name, const double& protector_strength)
+	Protector(
+	const std::string& protector_name,
+	const double& protector_strength)
 	: name(protector_name), strength(protector_strength) {}
 
 	//method prototypes
-
-
-	virtual bool isHired() const;
-
 	virtual Noble* get_employer() const;
 
 	virtual double get_strength() const;
 
 	virtual std::string get_name() const;
-
-	virtual bool set_employment_status(bool status);
 
 	virtual bool set_strength(double reduction_ratio);
 
