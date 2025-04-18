@@ -4,10 +4,16 @@
 #include "Warrior.h"
 
 namespace WarriorCraft {
+
 class Archer : public Warrior {
+	std::string sound = "TWANG!";
+
 public:
-	Archer(const std::string& warrior_name, const double& warrior_strength)
-	: Warrior(warrior_name), Warrior(warrior_strength) {}
+	Archer(const std::string& protector_name, const double& protector_strength)
+	: Warrior(protector_name, protector_strength) {}
+
+	std::string get_sound() const override;
 };
+
 }
 #endif

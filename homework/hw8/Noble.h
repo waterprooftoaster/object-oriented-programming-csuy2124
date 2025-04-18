@@ -3,11 +3,12 @@
 
 #include <string>
 #include <vector>
-#include "Warrior.h"
+#include <iostream>
+#include "Protector.h"
 
 namespace WarriorCraft {
 class Noble {
-	std::vector <Warrior*> warriors;
+	std::vector <Protector*> protectors;
 	bool dead = false;
 	std::string name;
 
@@ -18,25 +19,27 @@ public:
 	//constructor
 	explicit Noble(const std::string& noble_name) : name(noble_name) {}
 
-	//method prototypes
-
-	virtual bool remove_without_iterators(Warrior* warrior);
-
+	//method prototype
 	virtual std::string get_name() const;
 
 	virtual double get_army_strength() const;
 
-	virtual bool hire(Warrior& warrior);
+	virtual bool hires(Protector& protector);
 
-	virtual bool fire(Warrior& warrior);
+	virtual bool fires(Protector& protector);
 
 	virtual void set_strength(double reduction_ratio);
 
 	virtual void battle(Noble& opponent);
 
-	virtual bool remove_warrior(Warrior* warrior);
+	virtual bool remove_protector(Protector* protector);
 
 	virtual void kill();
+
+	virtual bool is_dead() const;
+
+	virtual void speak() const;
+
 }; //class Noble
 }
 
