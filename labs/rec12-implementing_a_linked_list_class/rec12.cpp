@@ -6,6 +6,8 @@
 using namespace std;
 
 class List {
+	friend ostream& operator<<(ostream& os, const List& list);
+
 	struct Node {
 		int data;
 		Node* next = nullptr;
@@ -13,85 +15,89 @@ class List {
 	};
 
 public:
-	List() : head(new Node()),
-			 tail(new Node()) { head -> next = tail, tail -> prev = head; }
+	List()
+	: head(new Node()), tail(new Node()) {
+		head->next = tail, tail->prev = head;
+	}
 
 	~List() {}
 
 	void push_back(int data) {
-		Node* new_node = new Node{data, tail, tail -> prev};
-		tail -> prev = new_node;
-		new_node -> prev -> next = new_node;
+		Node* new_node = new Node {data, tail, tail->prev};
+		tail->prev = new_node;
+		new_node->prev->next = new_node;
 	}
 
 	void push_front(int data) {
-		Node* new_node = new Node{data, head -> next, head};
-		head -> next = new_node;
-		new_node -> next -> prev = new_node;
+		Node* new_node = new Node {data, head->next, head};
+		head->next = new_node;
+		new_node->next->prev = new_node;
 	}
 
 	void pop_back() {
-		if (head -> next == tail) { return; }
-		Node* to_delete = tail -> prev;
-		Node* new_last = to_delete -> prev;
-		new_last -> next = tail;
-		tail -> prev = new_last;
-		to_delete -> prev = nullptr;
-		to_delete -> next = nullptr;
+		if (head->next == tail) { return; }
+		Node* to_delete = tail->prev;
+		Node* new_last = to_delete->prev;
+		new_last->next = tail;
+		tail->prev = new_last;
+		to_delete->prev = nullptr;
+		to_delete->next = nullptr;
 		delete to_delete;
 	}
 
 	void pop_front() {
-		if (head -> next == tail) { return; }
-		Node* to_delete = head -> next;
-		Node* new_first = to_delete -> next;
-		new_first -> prev = to_delete -> prev;
-		head -> next = new_first;
-		to_delete -> next = nullptr;
-		to_delete -> prev = nullptr;
+		if (head->next == tail) { return; }
+		Node* to_delete = head->next;
+		Node* new_first = to_delete->next;
+		new_first->prev = to_delete->prev;
+		head->next = new_first;
+		to_delete->next = nullptr;
+		to_delete->prev = nullptr;
 		delete to_delete;
 	}
 
-	int front() const { return head -> next -> data; }
+	int front() const { return head->next->data; }
 
-	int back() const { return tail -> prev -> data; }
+	int back() const { return tail->prev->data; }
 
-	int &front() { return head -> next -> data; }
+	int& front() { return head->next->data; }
 
-	int &back() { return tail -> prev -> data; }
+	int& back() { return tail->prev->data; }
 
 	size_t size() const {
 		size_t size = 0;
-		for (Node* node = head; node != tail; node = node -> next) { size++; }
+		for (Node* node = head; node != tail; node = node->next) { size++; }
 		return size;
 	}
 
 	void clear() {
-		if (head -> next == tail) { return; }
-		Node* pointer = head -> next;
-		while (pointer -> next != tail) {
-			Node* temp = pointer -> next;
-			pointer -> next = nullptr;
-			pointer -> prev = nullptr;
+		if (head->next == tail) { return; }
+		Node* pointer = head->next;
+		while (pointer->next != tail) {
+			Node* temp = pointer->next;
+			pointer->next = nullptr;
+			pointer->prev = nullptr;
 			delete pointer;
 			pointer = temp;
 		}
 	}
 
-	int &operator[](std::size_t index) {
-		Node* cur = head -> next;
-		for (std::size_t i = 0; i < index && cur != tail; ++
-			 i) cur = cur -> next;
-		if (cur == tail) throw std::out_of_range("Index out of range");
-		return cur -> data;
+	int& operator[](std::size_t index) {
+		Node* cur = head->next;
+		for (std::size_t i = 0; i < index && cur != tail; ++i)
+			cur = cur->next;
+		if (cur == tail)
+			throw std::out_of_range("Index out of range");
+		return cur->data;
 	}
 
-	const int &operator[](std::size_t index) const {
-		Node* cur = head -> next;
-		for (std::size_t i = 0; i < index && cur != tail; ++
-			 i) cur = cur -> next;
-		if (cur == tail) throw std::out_of_range("Index out of range");
-		return cur -> data;
+	const int& operator[](std::size_t index) const {
+		Node* cur = head->next;
+		for (std::size_t i = 0; i < index && cur != tail; ++i)
+			cur = cur->next;
+		if (cur == tail)
+			throw std::out_of_range("Index out of range");
+		return cur->data;
 	}
 
 private:
@@ -99,14 +105,16 @@ private:
 	Node* head;
 };
 
-void changeFrontAndBack(List &theList) {
-	theList . front() = 17;
-	theList . back() = 42;
+ostream& operator<<(ostream& os, const List& list) { printListInfo(list);}
+
+void changeFrontAndBack(List& theList) {
+	theList.front() = 17;
+	theList.back() = 42;
 }
 
 // Task 4
-void printListSlow(const List &myList) {
-	for (size_t i = 0; i < myList . size(); ++i) { cout << myList[i] << ' '; }
+void printListSlow(const List& myList) {
+	for (size_t i = 0; i < myList.size(); ++i) { cout << myList[i] << ' '; }
 	cout << endl;
 }
 
@@ -119,9 +127,9 @@ void doNothing(List aList) {
 }
 
 // Task 1
-void printListInfo(const List &myList) {
-	cout << "size: " << myList . size() << ", front: " << myList . front() <<
-			", back(): " << myList . back() << ", list: " << myList << endl;
+void printListInfo(const List& myList) {
+	cout << "size: " << myList.size() << ", front: " << myList.front() <<
+		", back(): " << myList.back() << ", list: " << myList << endl;
 }
 
 // The following should not compile. Check that it does not.
@@ -137,7 +145,7 @@ int main() {
 	cout << "Fill empty list with push_back: i*i for i from 0 to 9\n";
 	for (int i = 0; i < 10; ++i) {
 		cout << "myList.push_back(" << i * i << ");\n";
-		myList . push_back(i * i);
+		myList.push_back(i * i);
 		printListInfo(myList);
 	}
 	cout << "===================\n";
@@ -148,9 +156,9 @@ int main() {
 	cout << "===================\n";
 
 	cout << "Remove the items with pop_back\n";
-	while (myList . size()) {
+	while (myList.size()) {
 		printListInfo(myList);
-		myList . pop_back();
+		myList.pop_back();
 	}
 	cout << "===================\n";
 
@@ -159,24 +167,24 @@ int main() {
 	cout << "Fill empty list with push_front: i*i for i from 0 to 9\n";
 	for (int i = 0; i < 10; ++i) {
 		cout << "myList2.push_front(" << i * i << ");\n";
-		myList . push_front(i * i);
+		myList.push_front(i * i);
 		printListInfo(myList);
 	}
 	cout << "===================\n";
 	cout << "Remove the items with pop_front\n";
-	while (myList . size()) {
+	while (myList.size()) {
 		printListInfo(myList);
-		myList . pop_front();
+		myList.pop_front();
 	}
 	printListInfo(myList);
 	cout << "===================\n";
 
 	cout << "Fill empty list with push_back: i*i for i from 0 to 9\n";
-	for (int i = 0; i < 10; ++i) { myList . push_back(i * i); }
+	for (int i = 0; i < 10; ++i) { myList.push_back(i * i); }
 	printListInfo(myList);
 	cout << "Now clear\n";
-	myList . clear();
-	cout << "Size: " << myList . size() << ", list: " << myList << endl;
+	myList.clear();
+	cout << "Size: " << myList.size() << ", list: " << myList << endl;
 	cout << "===================\n";
 	/*
 		// Task 3
