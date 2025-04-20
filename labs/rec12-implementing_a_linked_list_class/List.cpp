@@ -76,7 +76,7 @@ int& List::operator[](const std::size_t& index) {
 		throw std::out_of_range("index out of range");
 	}
 	iterator curr = begin();
-	for (std::size_t i = 0; i < size(); ++i) {
+	for (std::size_t i = 0; i < index; ++i) {
 		++curr;
 	}
 	return *curr;
@@ -93,7 +93,7 @@ const int& List::operator[](const std::size_t& index) const {
 		throw std::out_of_range("index out of range");
 	}
 	iterator curr = begin();
-	for (std::size_t i = 0; i < size(); ++i) {
+	for (std::size_t i = 0; i < index; ++i) {
 		++curr;
 	}
 	return *curr;
