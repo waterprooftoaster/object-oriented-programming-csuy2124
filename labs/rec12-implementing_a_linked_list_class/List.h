@@ -24,13 +24,13 @@ public:
 
 	~List() {}
 
-	void push_back(int data) const;
+	void push_back(int data);
 
-	void push_front(int data) const;
+	void push_front(int data);
 
-	void pop_back() const;
+	void pop_back();
 
-	void pop_front() const;
+	void pop_front();
 
 	int front() const;
 
@@ -42,7 +42,7 @@ public:
 
 	size_t size() const;
 
-	void clear() const;
+	void clear();
 
 	int& operator[](std::size_t index);
 
@@ -51,6 +51,7 @@ public:
 private:
 	Node* tail;
 	Node* head;
+	size_t list_size = 0;
 };
 
 void changeFrontAndBack(List& theList);

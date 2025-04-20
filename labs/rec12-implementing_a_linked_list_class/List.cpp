@@ -3,23 +3,27 @@
 namespace DoublyLinkedList{
 
 std::ostream& operator<<(std::ostream& os, const List& list) {
-  printListInfo(list);
-  return os;
+	for (List::Node* curr = list.head -> next; curr != list.tail; curr = curr -> next) {
+		os << curr -> data << " ";
+	}
+	return os;
 }
 
-void List::push_back(int data) const {
+void List::push_back(int data) {
 	Node* new_node = new Node {data, tail, tail->prev};
 	tail->prev = new_node;
 	new_node->prev->next = new_node;
+	list_size++;
 }
 
-void List::push_front(int data) const {
+void List::push_front(int data)  {
 	Node* new_node = new Node {data, head->next, head};
 	head->next = new_node;
 	new_node->next->prev = new_node;
+	list_size++;
 }
 
-void List::pop_back() const {
+void List::pop_back()  {
 	if (head->next == tail) { return; }
 	Node* to_delete = tail->prev;
 	Node* new_last = to_delete->prev;
@@ -28,9 +32,10 @@ void List::pop_back() const {
 	to_delete->prev = nullptr;
 	to_delete->next = nullptr;
 	delete to_delete;
+	list_size--;
 }
 
-void List::pop_front() const {
+void List::pop_front()  {
 	if (head->next == tail) { return; }
 	Node* to_delete = head->next;
 	Node* new_first = to_delete->next;
@@ -39,6 +44,7 @@ void List::pop_front() const {
 	to_delete->next = nullptr;
 	to_delete->prev = nullptr;
 	delete to_delete;
+	list_size--;
 }
 
 int List::front() const { return head->next->data; }
@@ -49,22 +55,20 @@ int& List::front() { return head->next->data; }
 
 int& List::back() { return tail->prev->data; }
 
-size_t List::size() const {
-	size_t size = 0;
-	for (Node* node = head; node != tail; node = node->next) { size++; }
-	return size;
-}
+size_t List::size() const { return list_size; }
 
-void List::clear() const {
+void List::clear() {
 	if (head->next == tail) { return; }
-	Node* pointer = head->next;
-	while (pointer->next != tail) {
-		Node* temp = pointer->next;
-		pointer->next = nullptr;
-		pointer->prev = nullptr;
-		delete pointer;
-		pointer = temp;
+	list_size = 0;
+	Node* curr = head->next;
+	while (curr != tail) {
+		Node* next = curr->next;
+		delete curr;
+		curr = next;
 	}
+	// relink head and tail
+	head -> next = tail;
+	tail -> prev = head;
 }
 
 int& List::operator[](std::size_t index) {
@@ -115,5 +119,4 @@ void printListInfo(const List& myList) {
 // 	theList . front() = 17;
 // 	theList . back() = 42;
 // }
-
 }
