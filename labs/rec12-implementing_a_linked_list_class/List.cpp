@@ -71,22 +71,76 @@ void List::clear() {
 	tail -> prev = head;
 }
 
-int& List::operator[](std::size_t index) {
-	Node* cur = head->next;
-	for (std::size_t i = 0; i < index && cur != tail; ++i)
-		cur = cur->next;
-	if (cur == tail)
-		throw std::out_of_range("Index out of range");
-	return cur->data;
+int& List::operator[](const std::size_t& index) {
+	if (index > size() - 1 || index < 0) {
+		throw std::out_of_range("index out of range");
+	}
+	iterator curr = begin();
+	for (std::size_t i = 0; i < size(); ++i) {
+		++curr;
+	}
+	return *curr;
+	// Node* cur = head->next;
+	// for (std::size_t i = 0; i < index && cur != tail; ++i)
+	// 	cur = cur->next;
+	// if (cur == tail)
+	// 	std::cout << "index out of range" << std::endl;
+	// return cur->data;
 }
 
-const int& List::operator[](std::size_t index) const {
-	Node* cur = head->next;
-	for (std::size_t i = 0; i < index && cur != tail; ++i)
-		cur = cur->next;
-	if (cur == tail)
-		throw std::out_of_range("Index out of range");
-	return cur->data;
+const int& List::operator[](const std::size_t& index) const {
+	if (index > size() - 1 || index < 0) {
+		throw std::out_of_range("index out of range");
+	}
+	iterator curr = begin();
+	for (std::size_t i = 0; i < size(); ++i) {
+		++curr;
+	}
+	return *curr;
+	// Node* cur = head->next;
+	// for (std::size_t i = 0; i < index && cur != tail; ++i)
+	// 	cur = cur->next;
+	// if (cur == tail)
+	// 	std::cout << "index out of range" << std::endl;
+	// return cur->data;
+}
+List::iterator List::begin() const { return iterator{head->next};}
+
+List::iterator List::end() const { return iterator{tail};}
+
+int& List::iterator::operator*() const { return node->data; }
+
+List::iterator& List::iterator::operator++() {
+	node = node->next;
+	return *this;
+}
+
+List::iterator& List::iterator::operator--() {
+	node = node->prev;
+	return *this;
+}
+
+bool List::iterator::operator==(const iterator& rhs) const { return node == rhs.node; }
+
+bool List::iterator::operator!=(const iterator& rhs) const { return !(*this == rhs); }
+
+const List::iterator List::insert(const iterator& index_iterator, const int& data) {
+	Node* new_node = new Node{data, index_iterator.node, index_iterator.node->prev};
+	index_iterator.node->prev->next = new_node;
+	index_iterator.node->prev = new_node;
+	list_size++;
+	return iterator{new_node};
+}
+
+const List::iterator List::erase(const iterator& index_iterator) {
+	Node* temp = index_iterator.node -> next;
+	index_iterator.node -> prev -> next = index_iterator.node -> next;
+	index_iterator.node -> next -> prev = index_iterator.node -> prev;
+	index_iterator.node -> prev = nullptr;
+	index_iterator.node -> next = nullptr;
+	delete index_iterator.node;
+	list_size--;
+	return iterator{temp};
 }
 
 void changeFrontAndBack(List& theList) {
@@ -101,7 +155,7 @@ void printListSlow(const List& myList) {
 }
 
 // Task 8
-void doNothing(List aList) {
+void doNothing(const List& aList) {
 	std::cout << "In doNothing\n";
 	printListInfo(aList);
 	std::cout << std::endl;

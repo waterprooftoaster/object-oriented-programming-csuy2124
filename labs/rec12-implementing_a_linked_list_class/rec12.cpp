@@ -79,74 +79,79 @@ int main() {
 	myList[2] = 42;
 	printListSlow(myList);
 
+	// Task 4
+	cout << "\n------Task Four------\n";
+	cout << "Fill empty list with push_back: i*i for i from 0 to 9\n";
+	myList.clear();
+	for (int i = 0; i < 10; ++i)
+		myList.push_back(i * i);
+	printListInfo(myList);
+	cout << "Now display the elements in a ranged for\n";
+	for (int x : myList)
+		cout << x << ' ';
+	cout << endl;
+	cout << "And again using the iterator type directly:\n";
+	// Note you can choose to nest the iterator class or not, your choice.
+	//for (iterator iter = myList.begin(); iter != myList.end(); ++iter) {
+	for (List::iterator iter = myList.begin(); iter != myList.end(); ++iter) {
+		cout << *iter << ' ';
+	}
+	cout << endl;
+	cout << "WOW!!! (I thought it was cool.)\n";
+
+	// Task 5
+	cout << "\n------Task Five------\n";
+	cout << "Filling an empty list with insert at end: i*i for i from 0 to 9\n";
+	myList.clear();
+	for (int i = 0; i < 10; ++i)
+		myList.insert(myList.end(), i * i);
+	printListInfo(myList);
+	cout << "Filling an empty list with insert at begin(): " <<
+		"i*i for i from 0 to 9\n";
+	myList.clear();
+	for (int i = 0; i < 10; ++i)
+		myList.insert(myList.begin(), i * i);
+	printListInfo(myList);
+	// ***Need test for insert other than begin/end***
+	cout << "===================\n";
+
+	// Task 6
+	cout << "\n------Task Six------\n";
+	cout << "Filling an empty list with insert at end: i*i for i from 0 to 9\n";
+	myList.clear();
+	for (int i = 0; i < 10; ++i)
+		myList.insert(myList.end(), i * i);
+	cout << "Erasing the elements in the list, starting from the beginning\n";
+	while (myList.size()) {
+		printListInfo(myList);
+		myList.erase(myList.begin());
+	}
+	// ***Need test for erase other than begin/end***
+	cout << "===================\n";
+
 	/*
-			// Task 4
-			cout << "\n------Task Four------\n";
-			cout << "Fill empty list with push_back: i*i for i from 0 to 9\n";
-			myList.clear();
-			for (int i = 0; i < 10; ++i)  myList.push_back(i*i);
-			printListInfo(myList);
-			cout << "Now display the elements in a ranged for\n";
-			for (int x : myList) cout << x << ' ';
-			cout << endl;
-			cout << "And again using the iterator type directly:\n";
-			// Note you can choose to nest the iterator class or not, your choice.
-			//for (iterator iter = myList.begin(); iter != myList.end(); ++iter) {
-			for (List::iterator iter = myList.begin(); iter != myList.end(); ++iter) {
-				cout << *iter << ' ';
-			}
-			cout << endl;
-			cout << "WOW!!! (I thought it was cool.)\n";
+	// Task 7
+	cout << "\n------Task Seven------\n";
+	cout << "Copy control\n";
+	cout << "Filling an empty list with insert at end: i*i for i from 0 to 9\n";
+	myList.clear();
+	for (int i = 0; i < 10; ++i) myList.insert(myList.end(), i*i);
+	printListInfo(myList);
+	cout << "Calling doNothing(myList)\n";
+	doNothing(myList);
+	cout << "Back from doNothing(myList)\n";
+	printListInfo(myList);
 
-			// Task 5
-			cout << "\n------Task Five------\n";
-			cout << "Filling an empty list with insert at end: i*i for i from 0 to 9\n";
-			myList.clear();
-			for (int i = 0; i < 10; ++i) myList.insert(myList.end(), i*i);
-			printListInfo(myList);
-			cout << "Filling an empty list with insert at begin(): "
-				 << "i*i for i from 0 to 9\n";
-			myList.clear();
-			for (int i = 0; i < 10; ++i) myList.insert(myList.begin(), i*i);
-			printListInfo(myList);
-			// ***Need test for insert other than begin/end***
-			cout << "===================\n";
-
-			// Task 6
-			cout << "\n------Task Six------\n";
-			cout << "Filling an empty list with insert at end: i*i for i from 0 to 9\n";
-			myList.clear();
-			for (int i = 0; i < 10; ++i) myList.insert(myList.end(), i*i);
-			cout << "Erasing the elements in the list, starting from the beginning\n";
-			while (myList.size()) {
-				printListInfo(myList);
-				myList.erase(myList.begin());
-			}
-			// ***Need test for erase other than begin/end***
-			cout << "===================\n";
-
-			// Task 7
-			cout << "\n------Task Seven------\n";
-			cout << "Copy control\n";
-			cout << "Filling an empty list with insert at end: i*i for i from 0 to 9\n";
-			myList.clear();
-			for (int i = 0; i < 10; ++i) myList.insert(myList.end(), i*i);
-			printListInfo(myList);
-			cout << "Calling doNothing(myList)\n";
-			doNothing(myList);
-			cout << "Back from doNothing(myList)\n";
-			printListInfo(myList);
-
-			cout << "Filling listTwo with insert at begin: i*i for i from 0 to 9\n";
-			List listTwo;
-			for (int i = 0; i < 10; ++i) listTwo.insert(listTwo.begin(), i*i);
-			printListInfo(listTwo);
-			cout << "listTwo = myList\n";
-			listTwo = myList;
-			cout << "myList: ";
-			printListInfo(myList);
-			cout << "listTwo: ";
-			printListInfo(listTwo);
-			cout << "===================\n";
-			*/
+	cout << "Filling listTwo with insert at begin: i*i for i from 0 to 9\n";
+	List listTwo;
+	for (int i = 0; i < 10; ++i) listTwo.insert(listTwo.begin(), i*i);
+	printListInfo(listTwo);
+	cout << "listTwo = myList\n";
+	listTwo = myList;
+	cout << "myList: ";
+	printListInfo(myList);
+	cout << "listTwo: ";
+	printListInfo(listTwo);
+	cout << "===================\n";
+	*/
 }
