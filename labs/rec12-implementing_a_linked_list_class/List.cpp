@@ -60,9 +60,9 @@ size_t List::size() const { return list_size; }
 void List::clear() {
 	if (head->next == tail) { return; }
 	list_size = 0;
-	Node* curr = head->next;
+	const Node* curr = head->next;
 	while (curr != tail) {
-		Node* next = curr->next;
+		const Node* next = curr->next;
 		delete curr;
 		curr = next;
 	}

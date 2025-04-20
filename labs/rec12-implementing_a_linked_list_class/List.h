@@ -22,8 +22,6 @@ public:
 		head->next = tail, tail->prev = head;
 	}
 
-	~List() {}
-
 	void push_back(int data);
 
 	void push_front(int data);
