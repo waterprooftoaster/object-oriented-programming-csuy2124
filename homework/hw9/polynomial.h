@@ -9,23 +9,45 @@ class Polynomial {
 
 	struct Node {
 		int data;
-		Node *next;
+		Node* next= nullptr;
 	};
 
 public:
-	Polynomial() { head->next = new Node{0, nullptr}; }
-	Polynomial(const std::vector<int>& coefficients) {
-		for (const int& coefficient : coefficients) { push_back(coefficient); }
+	//constructors
+	Polynomial();
+
+	Polynomial(const std::vector<int>& coefficients);
+
+	//copy constructor
+	Polynomial(const Polynomial& rhs);
+
+	//destructor
+	~Polynomial() {
+		Node* curr = head;
+		while (curr != nullptr) {
+			Node* temp = curr->next;
+			delete curr;
+			curr = temp;
+		}
+		delete head;
 	}
 
+	//methods
 	void push_back(const int& coefficient);
 
 	Polynomial& operator+=(const Polynomial& rhs);
+
 	bool operator==(const Polynomial& rhs) const;
+
+	int evaluate(const int& x);
 
 private:
 	Node* head;
 	int degree = 0;
 };
+
+Polynomial operator+(const Polynomial& lhs, const Polynomial& rhs);
+
+bool operator!=(const Polynomial& lhs, const Polynomial& rhs);
 
 #endif

@@ -11,6 +11,6 @@
 -- Check for working CXX compiler: D:/Applications/CLion 2024.3.2/bin/mingw/bin/g++.exe - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (1.7s)
+-- Configuring done (2.4s)
 -- Generating done (0.0s)
 -- Build files have been written to: D:/Repo_Clones/Object_Oriented_Programming-CSUY2124/homework/hw9/cmake-build-debug
