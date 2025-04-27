@@ -16,7 +16,7 @@ public:
 	//constructors
 	Polynomial();
 
-	Polynomial(const std::vector<int>& coefficients);
+	explicit Polynomial(const std::vector<int>& coefficients);
 
 	//copy constructor
 	Polynomial(const Polynomial& rhs);
@@ -29,11 +29,12 @@ public:
 			delete curr;
 			curr = temp;
 		}
-		delete head;
 	}
 
 	//methods
 	void push_back(const int& coefficient);
+
+	void push_front(const int& coefficient) const;
 
 	Polynomial& operator+=(const Polynomial& rhs);
 
@@ -46,7 +47,7 @@ private:
 	int degree = 0;
 };
 
-Polynomial operator+(const Polynomial& lhs, const Polynomial& rhs);
+Polynomial operator+(Polynomial lhs, const Polynomial& rhs);
 
 bool operator!=(const Polynomial& lhs, const Polynomial& rhs);
 
