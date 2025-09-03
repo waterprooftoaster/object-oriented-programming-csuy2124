@@ -1,7 +1,6 @@
 /*
 Andy Wu
 cw4483
-Spring 2025
 hw01
 */
 
