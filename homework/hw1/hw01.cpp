@@ -14,10 +14,10 @@ using namespace std;
 void open_file(ifstream &ifs);
 
 // moves chr by however many steps 
-char decrypt_char(char &chr, int &step);
+char decrypt_char(char &chr, int step);
 
 // for loop calls decrypt_char to decrypt sequence of chrs
-void decrypt_string(string &input_str, int &step);
+void decrypt_string(string &input_str, int step);
 
 int main() {
     // open file
@@ -55,7 +55,7 @@ void open_file(ifstream &ifs){
     }
 }
 
-char decrypt_char(char &chr, int &step) {
+char decrypt_char(char &chr, int step) {
     // check if upper case and decrypts if so
     if (chr <= 'Z' && chr >= 'A') {
         chr -= step;
@@ -69,7 +69,7 @@ char decrypt_char(char &chr, int &step) {
     return chr;
 }
 
-void decrypt_string(string &input_str, int &step) {
+void decrypt_string(string &input_str, int step) {
     for (char& chr : input_str) {
         chr = decrypt_char(chr, step);
     }
