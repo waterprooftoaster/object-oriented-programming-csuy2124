@@ -1,6 +1,4 @@
 /*
-  rec01.cpp
-  fall 2024
  Andy Wu
  cw4483
 */
@@ -106,10 +104,13 @@ int main() { // Yes, it has to have an int for the return type
   
     // Task 8  Looping to successfully open a file, asking user for the name
     ifstream ifs;
-    
-    do {
-        ifs.open("text.txt");
-    } while (!ifs);
+    string name;
+
+    while (!ifs.is_open()){
+        cout << "input file name";
+        cin >> name;
+        ifs.open(name);
+    }
     
     // Task 9  Looping, reading file word by "word".
     string word;
@@ -126,6 +127,10 @@ int main() { // Yes, it has to have an int for the return type
     
     // Task 10 Open a file of integers, read it in, and display the sum.
     ifs.open("integers.txt");
+    if (!ifs){
+        cerr << "dind't open file";
+        exit(1);
+    }
     
     int integer;
     int sum = 0;
@@ -144,6 +149,10 @@ int main() { // Yes, it has to have an int for the return type
     
     // Taks 11 Open and read a file of integers and words. Display the sum.
     ifs.open("mixed.txt");
+    if (!ifs){
+        cerr << "dind't open file";
+        exit(1);
+    }
     
     string token;
     int sum11 = 0;
@@ -194,8 +203,8 @@ int main() { // Yes, it has to have an int for the return type
     cout << endl;
     
     //         c) using indices again but backwards
-    for (size_t  num = (evens.size() - 1); num > 0; num--){
-        cout << evens[num] << " ";
+    for (size_t  num = evens.size(); num > 0; num--){
+        cout << evens[num - 1] << " ";
     }
 
     cout << endl;
