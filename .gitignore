@@ -1,8 +1,63 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-# Editor-based HTTP Client requests
-/httpRequests/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
+# ---------------------------
+# macOS system files
+# ---------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Thumbnails
+._.DS_Store
+.Spotlight-V100
+.Trashes
+
+# ---------------------------
+# VS Code
+# ---------------------------
+.vscode/
+.history/
+*.code-workspace
+
+# ---------------------------
+# JetBrains (CLion, IntelliJ, etc.)
+# ---------------------------
+.idea/
+*.iml
+
+# ---------------------------
+# Xcode
+# ---------------------------
+*.xcworkspace
+*.xcuserstate
+*.xcuserdata/
+DerivedData/
+
+# ---------------------------
+# Build artifacts
+# ---------------------------
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+*.class
+
+# ---------------------------
+# Logs & caches
+# ---------------------------
+*.log
+*.cache
+
+.vscode/
+
+# Ignore your custom folder
+*.dsYM/
+*.DS_Store
+*.vscode/
+
+#Cmakes
+*.idea/
+*cmake-build-debug
