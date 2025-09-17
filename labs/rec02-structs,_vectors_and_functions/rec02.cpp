@@ -1,6 +1,5 @@
 /*
   rec02.cpp
-  spring 2025
   Andy Wu
   cw4483
 */
@@ -13,111 +12,90 @@
 using namespace std;
 
 struct Hydrocarbon{
-  int C, H;
+  int C;
+  int H;
   vector<string> names;
-
-  Hydrocarbon(int num_of_C, int num_of_H, vector<string> hydrocarbon_names) : 
-  C(num_of_C), H(num_of_H), names(hydrocarbon_names){}
-
-  void display() const{
-    cout << "C" << C << "H" << H;
-    for (const string& name : names){
-      cout << " " << name;
-    }
-    cout << endl;
-  }
-
-  void add_name(const string &name) {
-    names.push_back(name);
-  }
 };
 
 //function headers
 void open_file(ifstream &ifs);
-Hydrocarbon create_hydrocarbon(const string& name, int C, int H);
-vector<Hydrocarbon> read_hydrocarbs(ifstream& ifs);
-void combine_hydrocarbons(vector<Hydrocarbon>& hydrocarbs);
+void read_hydrocarbs(ifstream &ifs, vector<Hydrocarbon>& hydrocarbons);
+void create_hydrocarbon(vector<Hydrocarbon>& hydrocarbons, 
+                        const string &name, int C, int H);
+size_t find_hydrocarb(const vector<Hydrocarbon>& hydrocarbons, int C, int H);
+void sort_hydrocarbs(vector<Hydrocarbon>& hydrocarbons);
 void print_hydrocarbs(const vector<Hydrocarbon>& hydrocarbons);
-void sort_hydrocarbs(vector<Hydrocarbon>& hydrocarbs);
+void display(const Hydrocarbon& hydrocarbon);
 
 //main
 int main(){
   ifstream hydrocarb_stream;
-  vector<Hydrocarbon> hydrocarbs = read_hydrocarbs(hydrocarb_stream);
-  combine_hydrocarbons(hydrocarbs);
-  sort_hydrocarbs(hydrocarbs);
-  print_hydrocarbs(hydrocarbs);
+  open_file(hydrocarb_stream);
+  vector<Hydrocarbon> hydrocarbons;
+  read_hydrocarbs(hydrocarb_stream, hydrocarbons);
+  sort_hydrocarbs(hydrocarbons);
+  print_hydrocarbs(hydrocarbons);
 }
 
 void open_file(ifstream &ifs){
+  do {
     ifs.open("hydrocarbs.txt");
-
-    if(!ifs){
+    if (!ifs) {
       cerr << "could not open file" << endl;
-      exit(1);
     }
+  } while (!ifs);
 }
 
-Hydrocarbon create_hydrocarbon(const string &name, int C, int H){
-  //push name into new vector to match struct type
-  vector<string> names;
-  names.push_back(name);
-
-  //create new hydocarb
-  Hydrocarbon new_hydrocarbon(C, H, names);
-  return new_hydrocarbon;
-}
-
-vector<Hydrocarbon> read_hydrocarbs(ifstream &ifs){
-  open_file(ifs);
-
+void read_hydrocarbs(ifstream &ifs, vector<Hydrocarbon>& hydrocarbons) {
   int H, C;
   string name;
   char ignore;
-  vector<Hydrocarbon> hydrocarbons;
 
   while(ifs >> name >> ignore >> C >> ignore >> H){
-    Hydrocarbon new_hydrocarbon = create_hydrocarbon(name, C, H);
+      create_hydrocarbon(hydrocarbons, name, C, H);
+  }
+  ifs.close();
+}
+
+// add vector as parameter
+void create_hydrocarbon(vector<Hydrocarbon>& hydrocarbons, 
+                        const string &name, int C, int H){
+    //push name into new vector to match struct type
+  size_t index = find_hydrocarb(hydrocarbons, C, H);
+
+  if (index < hydrocarbons.size()) {
+    hydrocarbons[index].names.push_back(name);
+  }
+  else {
+    //create new hydocarb
+    Hydrocarbon new_hydrocarbon{C, H, {name}};
     hydrocarbons.push_back(new_hydrocarbon);
   }
-
-  return hydrocarbons;
 }
 
-void combine_hydrocarbons(vector<Hydrocarbon>& hydrocarbs){
-  //x = curr index, i = index for searching
-  for(size_t x = 0; x < hydrocarbs.size(); x++){
-    for(size_t i = 0; i < hydrocarbs.size(); i++){
-
-      //add name if same formula
-      if (hydrocarbs[i].C == hydrocarbs[x].C && hydrocarbs[i].H == hydrocarbs[x].H && i != x){
-        hydrocarbs[x].add_name((hydrocarbs[i].names)[0]);
-
-        //remove duplicate index
-        size_t remove = i;
-        hydrocarbs.erase(hydrocarbs.begin() + remove);
-      }
+size_t find_hydrocarb(const vector<Hydrocarbon>& hydrocarbons, int C, int H){
+  for (size_t i = 0; i < hydrocarbons.size(); i++){
+    if (hydrocarbons[i].C == C && hydrocarbons[i].H == H){
+      return i;
     }
   }
+  return hydrocarbons.size();
 }
 
-void sort_hydrocarbs(vector<Hydrocarbon>& hydrocarbs){
+void sort_hydrocarbs(vector<Hydrocarbon>& hydrocarbons){
   //bubble sort
-  size_t n = hydrocarbs.size();
+  size_t n = hydrocarbons.size();
 
   for (size_t i = 0; i < n - 1; i++){
-
     for (size_t j = 0; j < n - i - 1; j++){
-
-      if (hydrocarbs[j].C > hydrocarbs[j+1].C){
-        swap(hydrocarbs[j], hydrocarbs[j+1]);
+      if (hydrocarbons[j].C > hydrocarbons[j+1].C){
+        swap(hydrocarbons[j], hydrocarbons[j+1]);
       }
 
       //if num of C is equal, sort based on H
-      if (hydrocarbs[j].C == hydrocarbs[j+1].C){
-
-        if(hydrocarbs[j].H > hydrocarbs[j+1].H){
-          swap(hydrocarbs[j], hydrocarbs[j+1]);
+      if (hydrocarbons[j].C == hydrocarbons[j+1].C){
+        if(hydrocarbons[j].H > hydrocarbons[j+1].H){
+          swap(hydrocarbons[j], hydrocarbons[j+1]);
         }
       }
     }
@@ -125,7 +103,14 @@ void sort_hydrocarbs(vector<Hydrocarbon>& hydrocarbs){
 }
 
 void print_hydrocarbs(const vector<Hydrocarbon> &hydrocarbons){
-  for (Hydrocarbon curr : hydrocarbons){
-    curr.display();
+  for (const Hydrocarbon curr : hydrocarbons){
+    display(curr);
+  }
+}
+
+void display(const Hydrocarbon& hydrocarbon){
+  cout << "C" << hydrocarbon.C << "H" << hydrocarbon.H;
+  for (const string name : hydrocarbon.names){
+    cout << name << ", ";
   }
 }
