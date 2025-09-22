@@ -62,3 +62,11 @@ DerivedData/
 *.idea/
 *cmake-build-debug
 
+# Ignore all files in the repo root with no extension
+/*
+
+# Re-allow files that *do* have an extension
+!/*.*
+
+# Re-allow directories (so Git still sees nested code files)
+!*/
