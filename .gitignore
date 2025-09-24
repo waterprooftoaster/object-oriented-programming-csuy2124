@@ -41,5 +41,5 @@
 *.dwo
 
 # misc
-#.DS_Store
-#.vscode/
+*.DS_Store
+*.vscode/
