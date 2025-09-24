@@ -51,7 +51,7 @@ DerivedData/
 *.log
 *.cache
 
-.vscode/
+#.vscode/
 
 # Ignore your custom folder
 *.dsYM/
@@ -70,3 +70,5 @@ DerivedData/
 
 # Re-allow directories (so Git still sees nested code files)
 !*/
+
+*.vscode
