@@ -42,7 +42,7 @@ public:
             } else {
                 cout << "He's dead, " << warrior1_name << endl;
             }
-            return;
+            return; // prevents further checks
         } 
         // if both warriors are dead
         if (warrior1_strength == 0 && warrior2_strength == 0) {
@@ -110,7 +110,7 @@ int main() {
     ifstream warrior_file;
     open_file(warrior_file);
     string token;
-
+    // action based on command read
     while (warrior_file >> token) {
         if (token == "Warrior") {
             string warrior_name, weapon_name;
@@ -120,7 +120,6 @@ int main() {
             Warrior new_warrior = Warrior(warrior_name, weapon_name, strength);
             warriors.emplace_back(new_warrior);
         }
-
         if (token == "Status") {
             cout << "There are: " << warriors.size() << " warriors." << endl;
 
@@ -128,23 +127,33 @@ int main() {
                 cout << warrior << endl;
             }
         }
-
         if (token == "Battle") {
-            Warrior* opponent = nullptr;
+            Warrior* warrior1 = nullptr;
+            Warrior* warrior2 = nullptr;
             string warrior1_name, warrior2_name;
             warrior_file >> warrior1_name >> warrior2_name;
 
             for (Warrior& curr_warrior: warriors) {
-                if (curr_warrior.get_name() == warrior1_name) {
-
+                if (curr_warrior.get_name() == warrior1_name) { 
+                    warrior1 = &curr_warrior;
+                    // try to find warrior2 only if warrior1
                     for (Warrior& curr_warrior2: warriors) {
                         if (curr_warrior2.get_name() == warrior2_name) {
-                            opponent = &curr_warrior2;
-                            curr_warrior.battle(opponent);
-                        }
+                            warrior2 = &curr_warrior2;
+                        } 
                     }
                 }
             }
+            // error logging
+            if (!warrior1) { 
+                cerr << "couldn't find warrior1 for battle";
+                exit(1);
+            }
+            if (!warrior2) { 
+                cerr << "couldn't find warrior2 for battle";
+                exit(1);
+            }
+            warrior1->battle(warrior2);
         }
     }
 }
