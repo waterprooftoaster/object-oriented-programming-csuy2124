@@ -2,7 +2,6 @@
 // Who are you? What is this program called?
 /*
     Andy Wu
-    cw4483
     rec04
  */
 
@@ -111,7 +110,7 @@ public:
     }
 
     void movesInWith(Person &newRoomate) {
-        if (newRoomate == this) {
+        if (&newRoomate == this) {
             cout << "You cannot move in with yourself" << endl;
             return;
         }
