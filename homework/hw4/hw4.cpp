@@ -19,8 +19,8 @@ public:
     : name(warrior_name), strength(warrior_strength) {}
 
     //methods
-    bool get_employment_status() const {return hired;}
-    double get_strength() const {return strength;}
+    const bool get_employment_status() const {return hired;}
+    const double get_strength() const {return strength;}
     const string& get_name() const { return name;}
     void set_employment_status(bool status) {hired = status;}
     void set_strength(double reduction_ratio) {strength = strength * reduction_ratio;}
