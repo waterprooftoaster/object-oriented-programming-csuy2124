@@ -43,3 +43,4 @@
 # misc
 *.DS_Store
 *.vscode/
+*dSYM/
