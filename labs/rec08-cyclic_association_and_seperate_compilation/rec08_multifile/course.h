@@ -4,22 +4,25 @@
 #include <string>
 #include <vector>
 #include <iostream>
-using namespace std;
 
-class Student;  // Forward declaration
+namespace BrooklynPoly
+{
+  class Student; // Forward declaration
+  // ostream &operator<<(ostream &os, const Course &rhs);
 
-class Course {
-    friend ostream& operator<<(ostream& os, const Course& rhs);
-public:
-    explicit Course(const string& courseName);
-    const string& getName() const;
-    bool addStudent(Student* new_student);
-    void removeStudentsFromCourse(Student* student);
-    ~Course();
+  class Course
+  {
+    friend std::ostream &operator<<(std::ostream &os, const Course &rhs);
 
-private:
-    string name;
-    vector<Student*> students;
-};
+  public:
+    Course(const std::string &courseName);
+    const std::string &getName() const;
+    bool addStudent(Student *new_student);
+    void removeStudentsFromCourse(Student *student);
 
+  private:
+    std::string name;
+    std::vector<Student *> students;
+  };
+}
 #endif

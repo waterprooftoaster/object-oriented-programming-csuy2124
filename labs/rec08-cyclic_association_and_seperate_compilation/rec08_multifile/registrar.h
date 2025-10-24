@@ -3,28 +3,33 @@
 
 #include <string>
 #include <vector>
-#include "course.h"
-#include "student.h"
 #include <iostream>
-using namespace std;
 
-class Registrar {
-    friend ostream& operator<<(ostream& os, const Registrar& rhs);
-public:
+namespace BrooklynPoly
+{
+  class Course;
+  class Student;
+
+  // ostream &operator<<(ostream &os, const Registrar &rhs);
+  class Registrar
+  {
+    friend std::ostream &operator<<(std::ostream &os, const Registrar &rhs);
+
+  public:
     Registrar();
-    bool addCourse(const string& course_name);
-    bool addStudent(const string& student_name);
-    bool enrollStudentInCourse(const string& studentName, const string& courseName) const;
-    bool cancelCourse(const string& courseName);
+    bool addCourse(const std::string &course_name);
+    bool addStudent(const std::string &student_name);
+    bool enrollStudentInCourse(const std::string &studentName, const std::string &courseName) const;
+    bool cancelCourse(const std::string &courseName);
     void purge();
 
-private:
+  private:
     // (Optional helper functions; these are declared but not used in main.)
-    size_t findStudent(const string&) const;
-    size_t findCourse(const string&) const;
+    size_t findStudent(const std::string &) const;
+    size_t findCourse(const std::string &) const;
 
-    vector<Course*> courses;
-    vector<Student*> students;
-};
-
+    std::vector<Course *> courses;
+    std::vector<Student *> students;
+  };
+}
 #endif
