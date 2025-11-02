@@ -6,7 +6,7 @@
 
   And no, this won't compile. You have to fix the cyclic association
   and implement the methods.
-  
+
  */
 
 #include <iostream>
@@ -14,65 +14,71 @@
 #include <vector>
 using namespace std;
 
-class Course {
-    friend ostream& operator<<(ostream& os, const Course& rhs);
+class Course
+{
+    friend ostream &operator<<(ostream &os, const Course &rhs);
+
 public:
     // Course methods needed by Registrar
-    Course(const string& courseName);
-    const string& getName() const;
-    bool addStudent(Student*);
+    Course(const string &courseName);
+    const string &getName() const;
+    bool addStudent(Student *);
 
     // Tell the students that they are no longer in the course
-    void removeStudentsFromCourse(); 
+    void removeStudentsFromCourse();
 
 private:
     string name;
-    vector<Student*> students;
+    vector<Student *> students;
 }; // Course
 
-class Student {
-    friend ostream& operator<<(ostream& os, const Student& rhs);
+class Student
+{
+    friend ostream &operator<<(ostream &os, const Student &rhs);
+
 public:
     // Student methods needed by Registrar
-    Student(const string& name);
-    const string& getName() const;
-    bool addCourse(Course*);
+    Student(const string &name);
+    const string &getName() const;
+    bool addCourse(Course *);
 
     // Student method needed by Course::removeStudentsFromCourse
-    void removedFromCourse(Course*);
+    void removedFromCourse(Course *);
 
 private:
     string name;
-    vector<Course*> courses;
+    vector<Course *> courses;
 }; // Student
 
-class Registrar {
-    friend ostream& operator<<(ostream& os, const Registrar& rhs);
+class Registrar
+{
+    friend ostream &operator<<(ostream &os, const Registrar &rhs);
+
 public:
     Registrar();
 
     // Creates a new course, if none with that name
-    bool addCourse(const string&);
+    bool addCourse(const string &);
     // Creates a new student, if none with that name
-    bool addStudent(const string&);
+    bool addStudent(const string &);
 
     // If the student and the course exist, then enroll the student.
-    bool enrollStudentInCourse(const string& studentName,
-                               const string& courseName);
+    bool enrollStudentInCourse(const string &studentName,
+                               const string &courseName);
 
     // Unenroll the students from the course and remove the course
     // from the Registrar.
-    bool cancelCourse(const string& courseName);
+    bool cancelCourse(const string &courseName);
 
     // Get rid of everything!!!
     void purge();
 
 private:
-    size_t findStudent(const string&) const;
-    size_t findCourse(const string&) const;
+    size_t findStudent(const string &) const;
+    size_t findCourse(const string &) const;
 
-    vector<Course*> courses;
-    vector<Student*> students;
+    vector<Course *> courses;
+    vector<Student *> students;
 }; // Registrar
 
 int main()
@@ -82,7 +88,7 @@ int main()
 
     cout << "No courses or students added yet\n";
     cout << registrar << endl;
-     
+
     cout << "AddCourse CS101.001\n";
     registrar.addCourse("CS101.001");
     cout << registrar << endl;
@@ -110,9 +116,8 @@ int main()
     cout << "CancelCourse CS102.001\n";
     registrar.cancelCourse("CS102.001");
     cout << registrar << endl;
-   
+
     cout << "Purge for start of next semester\n";
     registrar.purge();
     cout << registrar << endl;
 } // main
-  
