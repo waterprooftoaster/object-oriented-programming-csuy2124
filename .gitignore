@@ -45,3 +45,4 @@
 *.vscode/
 *dSYM/
 *.editorconfig
+*notes/
