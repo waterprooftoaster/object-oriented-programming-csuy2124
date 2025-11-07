@@ -125,6 +125,11 @@ public:
   friend ostream &operator<<(ostream &os, const MILL &a_mill)
   {
     os << "The MILL has the following instruments:";
+    if (a_mill.inventory.empty())
+    {
+      os << " None" << endl;
+      return os;
+    }
     for (size_t i = 0; i < a_mill.inventory.size(); ++i)
     {
       if (a_mill.inventory[i] != nullptr)
@@ -136,11 +141,6 @@ public:
         os << " None" << endl;
         return os;
       }
-    }
-    if (a_mill.inventory.empty())
-    {
-      os << " None" << endl;
-      return os;
     }
 
     for (const Instrument *instr : a_mill.inventory)
