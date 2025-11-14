@@ -1,3 +1,0 @@
-D:/Git_Clones/Object_Oriented_Programming-CSUY2124/homework/hw8/cmake-build-debug/CMakeFiles/hw8.dir
-D:/Git_Clones/Object_Oriented_Programming-CSUY2124/homework/hw8/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Git_Clones/Object_Oriented_Programming-CSUY2124/homework/hw8/cmake-build-debug/CMakeFiles/rebuild_cache.dir
