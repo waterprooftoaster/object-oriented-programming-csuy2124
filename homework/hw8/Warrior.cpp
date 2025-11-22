@@ -1,10 +1,14 @@
-#include "Warrior.h"
+// Warrior.cpp
+// Implementation of the Warrior class
+// Andy Wu
+// cw4483
 
-namespace WarriorCraft {
-void Warrior::speak() const {
-	Protector::speak();
-	std::cout << get_name() << " says: " <<
-			" Take that in the name of my lord, " << get_employer()->get_name()
-			<< std::endl;
-}
+#include "Warrior.h"
+#include "Noble.h"
+#include <iostream>
+
+using namespace std;
+
+namespace WarriorCraft
+{
 }

@@ -1,48 +1,52 @@
+// Protector.h
+// Abstract base class for protectors/warriors. Protectors have names and strength,
+// and can be hired by Lords to fight for them.
+
 #ifndef PROTECTOR_H
 #define PROTECTOR_H
 
 #include <string>
 #include <iostream>
 
-namespace WarriorCraft {
-class Noble;
+namespace WarriorCraft
+{
+	class Noble;
 
-class Protector {
-	std::string name;
-	double strength;
-	Noble* employer = nullptr;
+	class Protector
+	{
+		std::string name;
+		double strength;
+		Noble *employer = nullptr;
 
-	// friend
-	friend std::ostream& operator <<(
-	std::ostream& os,
-	const Protector& protector);
+		// friend
+		friend std::ostream &operator<<(
+				std::ostream &os,
+				const Protector &protector);
 
-public:
-	virtual ~Protector() = default;
+	public:
+		virtual ~Protector() = default;
 
-	//constructor
-	Protector(
-	const std::string& protector_name,
-	const double& protector_strength)
-	: name(protector_name), strength(protector_strength) {}
+		// constructor
+		Protector(
+				const std::string &protector_name,
+				const double &protector_strength)
+				: name(protector_name), strength(protector_strength) {}
 
-	//method prototypes
-	virtual Noble* get_employer() const;
+		// method prototypes
+		virtual Noble *get_employer() const;
 
-	virtual double get_strength() const;
+		virtual double get_strength() const;
 
-	virtual std::string get_name() const;
+		virtual std::string get_name() const;
 
-	virtual bool set_strength(double reduction_ratio);
+		virtual bool set_strength(double reduction_ratio);
 
-	virtual bool set_employer(Noble* employer);
+		virtual bool set_employer(Noble *employer);
 
-	virtual bool runaway();
+		virtual bool runaway();
 
-	virtual void speak() const;
-
-	virtual std::string get_sound() const = 0;
-}; //class Warrior
+		virtual void speak() const = 0;
+	}; // class Protector
 }
 
 #endif

@@ -1,8 +1,18 @@
+// Wizard.cpp
+// Implementation of the Wizard class
+// Andy Wu
+// cw4483
+
 #include "Wizard.h"
-
+#include "Noble.h"
 #include <iostream>
-#include <string>
 
-namespace WarriorCraft {
-std::string Wizard::get_sound() const { return sound; }
+using namespace std;
+
+namespace WarriorCraft
+{
+  void Wizard::speak() const
+  {
+    cout << sound << endl;
+  }
 }

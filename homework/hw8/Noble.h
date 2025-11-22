@@ -1,47 +1,46 @@
+// Noble.h
+// Abstract base class for nobles in the game. Noble is a pure abstract class
+// and does not hold an army. Derived classes like Lord will have armies.
+
 #ifndef NOBLE_H
 #define NOBLE_H
 
 #include <string>
-#include <vector>
 #include <iostream>
-#include "Protector.h"
 
-namespace WarriorCraft {
-class Noble {
-	std::vector<Protector*> protectors;
-	bool dead = false;
-	std::string name;
+namespace WarriorCraft
+{
+	class Protector;
 
-	//friends
-	friend std::ostream& operator <<(std::ostream& os, const Noble& noble);
+	class Noble
+	{
+		bool dead = false;
+		std::string name;
 
-public:
-	virtual ~Noble() = default;
+		// friends
+		friend std::ostream &operator<<(std::ostream &os, const Noble &noble);
 
-	//constructor
-	explicit Noble(const std::string& noble_name) : name(noble_name) {}
+	public:
+		virtual ~Noble() = default;
 
-	//method prototype
-	virtual std::string get_name() const;
+		// constructor
+		explicit Noble(const std::string &noble_name) : name(noble_name) {}
 
-	virtual double get_strength() const;
+		// method prototype
+		virtual std::string get_name() const;
 
-	virtual bool hires(Protector& protector);
+		virtual double get_strength() const;
 
-	virtual bool fires(Protector& protector);
+		virtual bool set_strength(double reduction_ratio) = 0;
 
-	virtual bool set_strength(double reduction_ratio);
+		virtual void battle(Noble &opponent);
 
-	virtual void battle(Noble& opponent);
+		virtual void kill();
 
-	virtual bool remove_protector(Protector* protector);
+		virtual bool is_dead() const;
 
-	virtual void kill();
-
-	virtual bool is_dead() const;
-
-	virtual void speak() const;
-}; //class Noble
+		virtual void speak() const = 0;
+	}; // class Noble
 }
 
 #endif
