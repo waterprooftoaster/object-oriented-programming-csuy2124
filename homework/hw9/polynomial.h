@@ -1,54 +1,61 @@
+// Author: waterprooftoaster
+// Polynomial class implementation using singly linked list
+
 #ifndef POLYNOMIAL_H
 #define POLYNOMIAL_H
 
 #include <ostream>
 #include <vector>
 
+// Polynomial class using a singly linked list to store coefficients
 class Polynomial {
-	friend std::ostream& operator<<(std::ostream& os, const Polynomial& rhs);
+  friend std::ostream &operator<<(std::ostream &os, const Polynomial &rhs);
 
-	struct Node {
-		int data;
-		Node* next= nullptr;
-	};
+  // Private nested Node structure for linked list
+  struct Node {
+    int data;
+    Node *next = nullptr;
+  };
 
 public:
-	//constructors
-	Polynomial();
+  // Default constructor: creates the zero polynomial
+  Polynomial();
 
-	explicit Polynomial(const std::vector<int>& coefficients);
+  // Constructor from vector of coefficients (highest degree first)
+  explicit Polynomial(const std::vector<int> &coefficients);
 
-	//copy constructor
-	Polynomial(const Polynomial& rhs);
+  // Copy constructor
+  Polynomial(const Polynomial &rhs);
 
-	//destructor
-	~Polynomial() {
-		Node* curr = head;
-		while (curr != nullptr) {
-			Node* temp = curr->next;
-			delete curr;
-			curr = temp;
-		}
-	}
+  // Assignment operator
+  Polynomial &operator=(const Polynomial &rhs);
 
-	//methods
-	void push_back(const int& coefficient);
+  // Destructor
+  ~Polynomial();
 
-	void push_front(const int& coefficient) const;
+  // Append coefficient to end of list
+  void push_back(const int &coefficient);
 
-	Polynomial& operator+=(const Polynomial& rhs);
+  // Add coefficient to front of list
+  void push_front(const int &coefficient) const;
 
-	bool operator==(const Polynomial& rhs) const;
+  // Add-assign operator
+  Polynomial &operator+=(const Polynomial &rhs);
 
-	int evaluate(const int& x);
+  // Equality operator
+  bool operator==(const Polynomial &rhs) const;
+
+  // Evaluate polynomial at given x value
+  int evaluate(const int &x);
 
 private:
-	Node* head;
-	int degree = 0;
+  Node *head;     // Points directly to first coefficient (nullptr for zero)
+  int degree = 0; // Degree of polynomial
 };
 
-Polynomial operator+(Polynomial lhs, const Polynomial& rhs);
+// Addition operator
+Polynomial operator+(Polynomial lhs, const Polynomial &rhs);
 
-bool operator!=(const Polynomial& lhs, const Polynomial& rhs);
+bool operator!=(const Polynomial &lhs, const Polynomial &rhs);
 
 #endif
