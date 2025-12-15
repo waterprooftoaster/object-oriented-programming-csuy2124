@@ -6,12 +6,14 @@
 using namespace std;
 using namespace DoublyLinkedList;
 
-int main() {
+int main()
+{
 	// Task 1
 	cout << "\n------Task One------\n";
 	List myList;
 	cout << "Fill empty list with push_back: i*i for i from 0 to 9\n";
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 10; ++i)
+	{
 		cout << "myList.push_back(" << i * i << ");\n";
 		myList.push_back(i * i);
 		printListInfo(myList);
@@ -24,7 +26,8 @@ int main() {
 	cout << "===================\n";
 
 	cout << "Remove the items with pop_back\n";
-	while (myList.size()) {
+	while (myList.size())
+	{
 		printListInfo(myList);
 		myList.pop_back();
 	}
@@ -33,14 +36,16 @@ int main() {
 	// Task 2
 	cout << "\n------Task Two------\n";
 	cout << "Fill empty list with push_front: i*i for i from 0 to 9\n";
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 10; ++i)
+	{
 		cout << "myList2.push_front(" << i * i << ");\n";
 		myList.push_front(i * i);
 		printListInfo(myList);
 	}
 	cout << "===================\n";
 	cout << "Remove the items with pop_front\n";
-	while (myList.size()) {
+	while (myList.size())
+	{
 		printListInfo(myList);
 		myList.pop_front();
 	}
@@ -48,7 +53,10 @@ int main() {
 	cout << "===================\n";
 
 	cout << "Fill empty list with push_back: i*i for i from 0 to 9\n";
-	for (int i = 0; i < 10; ++i) { myList.push_back(i * i); }
+	for (int i = 0; i < 10; ++i)
+	{
+		myList.push_back(i * i);
+	}
 	printListInfo(myList);
 	cout << "Now clear\n";
 	myList.clear();
@@ -73,9 +81,9 @@ int main() {
 	cout << endl;
 	cout << "Now calling a function, printListSlow, to do the same thing\n";
 	printListSlow(myList);
-	cout << "Finally, for this task, using the index operator to modify\n" <<
-		"the data in the third item in the list\n" <<
-		"and then using printListSlow to display it again\n";
+	cout << "Finally, for this task, using the index operator to modify\n"
+			 << "the data in the third item in the list\n"
+			 << "and then using printListSlow to display it again\n";
 	myList[2] = 42;
 	printListSlow(myList);
 
@@ -92,8 +100,9 @@ int main() {
 	cout << endl;
 	cout << "And again using the iterator type directly:\n";
 	// Note you can choose to nest the iterator class or not, your choice.
-	//for (iterator iter = myList.begin(); iter != myList.end(); ++iter) {
-	for (List::iterator iter = myList.begin(); iter != myList.end(); ++iter) {
+	// for (iterator iter = myList.begin(); iter != myList.end(); ++iter) {
+	for (List::iterator iter = myList.begin(); iter != myList.end(); ++iter)
+	{
 		cout << *iter << ' ';
 	}
 	cout << endl;
@@ -106,8 +115,7 @@ int main() {
 	for (int i = 0; i < 10; ++i)
 		myList.insert(myList.end(), i * i);
 	printListInfo(myList);
-	cout << "Filling an empty list with insert at begin(): " <<
-		"i*i for i from 0 to 9\n";
+	cout << "Filling an empty list with insert at begin(): " << "i*i for i from 0 to 9\n";
 	myList.clear();
 	for (int i = 0; i < 10; ++i)
 		myList.insert(myList.begin(), i * i);
@@ -122,7 +130,8 @@ int main() {
 	for (int i = 0; i < 10; ++i)
 		myList.insert(myList.end(), i * i);
 	cout << "Erasing the elements in the list, starting from the beginning\n";
-	while (myList.size()) {
+	while (myList.size())
+	{
 		printListInfo(myList);
 		myList.erase(myList.begin());
 	}
